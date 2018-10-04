@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BlueIt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Leckerli+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="main1.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.3/geolocator.min.js"></script>
+    <script type="text/javascript">
+
+        geolocator.config({
+            language: "en",
+            google: {
+                version: "3",
+                key: "AIzaSyD5oLXzPS0A9N-z3VYZc0rnGu5yVuyK9Xg"
+            }
+        });
+
+        window.onload = function () {
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumWait: 10000,     // max wait time for desired accuracy
+                maximumAge: 0,          // disable cache
+                desiredAccuracy: 30,    // meters
+                fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+                addressLookup: true,   // requires Google API key if true
+                timezone: false,        // requires Google API key if true
+            };
+            geolocator.locate(options, function (err, location) {
+                if (err) return console.log(err);
+                console.log(err || location);
+            });
+        };
+
+    </script>
+</head>
+
+<body>
+
+    <!-- =====NAVBAR===== -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper container">
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <span id="title">BlueIt</span>
+                <ul id="nav-mobile" class="right hide-on-med-and-down row">
+                    <div class="col s2">
+                        <span>Login:</span>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- ==^^^NAVBAR^^^== -->
+
+    <!-- =====SLIDE OUT===== -->
+    <ul id="slide-out" class="sidenav">
+        <h5>Login:</h5>
+        <hr>
+        <div class="input-field col s5">
+            <input id="email-slide" type="email" class="validate">
+            <label for="email-slide">Email</label>
+        </div>
+        <div class="input-field col s5">
+            <input id="password-slide" type="password" class="validate">
+            <label for="password-slide">Password</label>
+        </div>
+        <h5>Filter Posts</h5>
+        <hr>
+        <form>
+            <h6>Location:</h6>
+            <input id="location" type="text" placeholder="Zip Code">
+            <h6>Serch Topics:</h6>
+            <select multiple>
+                <option value="" disabled selected>Topics</option>
+                <option value="1">Sports</option>
+                <option value="2">Movies</option>
+                <option value="3">Food</option>
+            </select>
+            <h6>Rating:</h6>
+            <select>
+                <option value="" disabled selected>Choose Rating</option>
+                <option value="1">Best to Worst</option>
+                <option value="2">Worst to Best</option>
+            </select>
+            <h6>Search Usernames:</h6>
+            <div class="search-div">
+                <input id="search-text-slide" type="text" placeholder="Filter User Names">
+                <div id="names-slide"></div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
+        </form>
+    </ul>
+    <!-- ==^^^SLIDE OUT^^^== -->
+
+    <div class="main container row">
+
+        <!-- =====SIDE NAV===== -->
+        <div id="side-nav" class="col m3">
+            <h5>Filter Posts</h5>
+            <hr>
+            <form>
+                <h6>Location:</h6>
+                <input id="location" type="text" placeholder="Zip Code">
+                <h6>Serch Topics:</h6>
+                <select multiple>
+                    <option value="" disabled selected>Topics</option>
+                    <option value="1">Sports</option>
+                    <option value="2">Movies</option>
+                    <option value="3">Food</option>
+                </select>
+                <h6>Rating:</h6>
+                <select>
+                    <option value="" disabled selected>Choose Rating</option>
+                    <option value="1">Best to Worst</option>
+                    <option value="2">Worst to Best</option>
+                </select>
+                <h6>Search Usernames:</h6>
+                <div class="search-div chocolate anopther poops">
+                    <input id="search-text" type="text" placeholder="Filter User Names">
+                    <div id="names"></div>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
+            </form>
+        </div>
+        <!-- ==^^^SIDE NAV^^^== -->
+
+        <!-- =====POST===== -->
+
+        <div id="post-feed" class="col m7">
+
+
+            <!-- =====CREATE POST===== -->
+            <div class="post">
+                <h5>Add Your Post</h5>
+                <form>
+                    <select multiple>
+                        <option value="" disabled selected>Topics</option>
+                        <option value="1">Sports</option>
+                        <option value="2">Movies</option>
+                        <option value="3">Food</option>
+                    </select>
+                    <div class="input-field">
+                        <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                        <label for="textarea2">What's on your mind?</label>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                </form>
+            </div>
+            <!-- ==^^^CREATE POST^^^== -->
+
+            <h5>What's In Your Feed?</h5>
+            <div class="post">
+                <div class="text-bubble">
+                    <div class="bubble z-depth-1">
+                        <p class="body-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
+                            doloremque ipsam temporibus veniam similique obcaecati. Incidunt iusto, voluptate id
+                            consectetur, sequi asperiores soluta obcaecati omnis consequuntur autem voluptas cum
+                            nulla?.</p>
+                    </div>
+                    <div class="triangle-right"></div>
+                </div>
+                <div class="icon">
+                    <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                    <span class="icon-name">Peter Serefenowitz</span>
+                </div>
+                <div class="post-info">
+                    <span class="time-stamp">Posted 4 days ago</span><br>
+                    <span class="topics">Topics: Stuff, Sports, Food, Movies, Romance, Animals</span>
+                </div>
+            </div>
+        </div>
+        <!-- ===^^POST^^=== -->
+
+        <!-- =====AD SPACE===== -->
+        <div id="ad-space" class="col m2">
+            <h4>Ad Space</h4>
+            <p>adspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspaceadspace</p>
+        </div>
+        <!-- ==^^^AD SPACE^^^== -->
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="mockup.js"></script>
+</body>
+
+</html>
