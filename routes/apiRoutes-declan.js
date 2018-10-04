@@ -89,4 +89,14 @@ module.exports = function(app) {
     });
   });
 
+  app.delete("/api/authors/:id", function(req, res) {
+    db.Authors.destroy({
+      where: {
+        ID: req.params.id
+      }
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
+
 };

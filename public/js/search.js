@@ -27,34 +27,40 @@ $(document).ready(() => {
     // Render a users posts
     const renderUserPosts = name => {
         $.get("/api/authors/" + name, data => {
-            console.log(data.Posts);
+            console.log(data);
 
             var userView = $("<h5>")
-            $(userView).html(`${data.name}'s Posts`)
+            $(userView).html(`${data.UserName}'s Posts`)
                 .appendTo(".user-posts");
 
             $(".local-posts").hide();
+            $(".add-post").hide();
             $(".user-posts").empty();
 
             data.Posts.forEach(element => {
                 console.log(element)
+                console.log("body " + element.Body)
+                console.log("name " + data.UserName)
+                console.log("time posted " + element.createdAt)
+                console.log("tags" + element.Tags)
+
                 var userPosts = $(`
                 <div class="post">
                     <div class="bubble z-depth-1">
-                        <p>${element.body}</p>
+                        <p>${element.Body}</p>
                     </div>
                     <div class="triangle-right"></div>
                     <div class="icon">
                         <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                        ${data.name}
+                        ${data.UserName}
                     </div>
                     <div class="post-info">
-                        <span id="tags">Topics: ${element.tags}Stuff, Sports, Food</span>
+                        <span id="tags">Topics: ${element.Tags}Stuff, Sports, Food</span>
                         ||
-                        <span id="time-stamp">Posted 4 days ago</span>
+                        <span id="time-stamp">${element.createdAt}</span>
                     </div>
                 </div>`)
-                $(userPosts).appendTo($(".user-posts"))
+                $(userPosts).appendTo($(".user-posts"));
             })
             
         })

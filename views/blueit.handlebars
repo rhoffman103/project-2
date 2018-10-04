@@ -101,7 +101,7 @@
     <div id="post-feed" class="col m7">
 
         <!-- =====CREATE POST===== -->
-        <div class="post">
+        <div class="post add-post">
             <h5>Add Your Post</h5>
             <form>
                 <select multiple>
@@ -118,6 +118,7 @@
             </form>
         </div>
         <!-- ==^^^CREATE POST^^^== -->
+        {{!-- {{> posts}} --}}
 
         <div class="local-posts">
             <h5>What's In Your Feed?</h5>
@@ -150,11 +151,9 @@
             </div>
                 {{/each}}
             <!-- ===^^LOCAL POST^^=== -->
-            <!-- USER POSTS -->
-            <div class="user-posts">
-
-            </div>
         </div>
+         <!-- USER POSTS -->
+        <div class="user-posts"></div>
     </div>
 
     <!-- ADD SPACE -->

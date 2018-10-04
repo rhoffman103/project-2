@@ -23,7 +23,7 @@
 //   Tags: JSON.stringify(["Magic", "Children"]),
 //   Public: true,
 //   Rating: 15,
-//   AuthorID: "5a422438-c17b-4656-b845-88e0a6780fda"
+//   AuthorID: "13ec8a5d-3b9d-48ed-b27e-ab1e14e16560"
 // });
 // $.post("/api/testadd", {
 //   Location: "03825",

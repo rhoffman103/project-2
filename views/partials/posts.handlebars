@@ -1,0 +1,36 @@
+<div class="local-posts">
+            <h5>What's In Your Feed?</h5>
+            <!-- =====POST===== -->
+            {{#each posts}}
+            <div class="post">
+                <div class="text-bubble">
+                    <div class="bubble z-depth-1">
+                        <p class="body-text">
+                            {{this.Body}}
+                        </p>
+                    </div>
+                    <div class="triangle-right"></div>
+                    <div class="icon">
+                        <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                        <span class="icon-name">
+                            {{this.Author.UserName}}
+                        </span>
+                    </div>
+                    <div class="post-info">
+                        <span class="topics">Topics:
+                            {{Tags}}
+                            {{!-- {{#each Tags}}
+                            {{this}}
+                            {{/each}} --}}
+                        </span>
+                        <span class="time-stamp">Posted {{this.createdAt}}</span>
+                    </div>
+                </div>
+            </div>
+                {{/each}}
+            <!-- ===^^LOCAL POST^^=== -->
+            {{!-- <!-- USER POSTS -->
+            <div class="user-posts">
+
+            </div> --}}
+        </div>
