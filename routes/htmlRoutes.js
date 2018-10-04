@@ -20,8 +20,21 @@ module.exports = function(app) {
     });
   });
 
-  // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
+   // blueit home page
+   app.get("/blueit", (req, res) => {
+    // // Load blueit page
+    db.Posts.findAll({
+      include: [db.Authors]
+    }).then(function(dbPosts) {
+      console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+      res.render("blueit", {
+        posts: dbPosts
+      });
+    });
   });
+
+  // Render 404 page for any unmatched routes
+  // app.get("*", function(req, res) {
+  //   res.render("404");
+  // });
 };

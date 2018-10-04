@@ -1,0 +1,166 @@
+<!-- =====NAVBAR===== -->
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <span id="title">BlueIt</span>
+            <ul id="nav-mobile" class="right hide-on-med-and-down row">
+                <div class="col s2">
+                    <span>Login:</span>
+                </div>
+                <div class="input-field col s5">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-field col s5">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+<!-- ==^^^NAVBAR^^^== -->
+
+<!-- =====SLIDE OUT===== -->
+<ul id="slide-out" class="sidenav">
+    <h5>Login:</h5>
+    <hr>
+    <div class="input-field col s5">
+        <input id="email-slide" type="email" class="validate">
+        <label for="email-slide">Email</label>
+    </div>
+    <div class="input-field col s5">
+        <input id="password-slide" type="password" class="validate">
+        <label for="password-slide">Password</label>
+    </div>
+    <h5>Filter Posts</h5>
+    <hr>
+    <form>
+        <h6>Location:</h6>
+        <input id="location" type="text" placeholder="Zip Code">
+        <h6>Serch Topics:</h6>
+        <select multiple>
+            <option value="" disabled selected>Topics</option>
+            <option value="1">Sports</option>
+            <option value="2">Movies</option>
+            <option value="3">Food</option>
+        </select>
+        <h6>Rating:</h6>
+        <select>
+            <option value="" disabled selected>Choose Rating</option>
+            <option value="1">Best to Worst</option>
+            <option value="2">Worst to Best</option>
+        </select>
+        <!-- SEARCH BOX -->
+        <h6>Search Usernames:</h6>
+        {{!-- <div class="search-div">
+            <input class="search-text" type="text" placeholder="Filter User Names">
+            <ul class="userNameList"></ul>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Search</button> --}}
+    </form>
+</ul>
+<!-- ==^^^SLIDE OUT^^^== -->
+
+<div class="main container row">
+
+    <!-- =====SIDE NAV===== -->
+    <div id="side-nav" class="col m3">
+        <h5>Filter Posts</h5>
+        <hr>
+        <form>
+            <h6>Location:</h6>
+            <input id="location" type="text" placeholder="Zip Code">
+            <h6>Serch Topics:</h6>
+            <select multiple>
+                <option value="" disabled selected>Topics</option>
+                <option value="1">Sports</option>
+                <option value="2">Movies</option>
+                <option value="3">Food</option>
+            </select>
+            <h6>Rating:</h6>
+            <select>
+                <option value="" disabled selected>Choose Rating</option>
+                <option value="1">Best to Worst</option>
+                <option value="2">Worst to Best</option>
+            </select>
+
+            <!-- SEARCH BOX -->
+            <h6>Search Usernames:</h6>
+            <div class="search-div">
+                <input class="search-text" type="text" placeholder="Filter User Names">
+                <ul class="userNameList"></ul>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
+        </form>
+    </div>
+    <!-- ==^^^SIDE NAV^^^== -->
+    {{!-- POST FEED --}}
+    <div id="post-feed" class="col m7">
+
+        <!-- =====CREATE POST===== -->
+        <div class="post">
+            <h5>Add Your Post</h5>
+            <form>
+                <select multiple>
+                    <option value="" disabled selected>Topics</option>
+                    <option value="1">Sports</option>
+                    <option value="2">Movies</option>
+                    <option value="3">Food</option>
+                </select>
+                <div class="input-field">
+                    <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                    <label for="textarea2">What's on your mind?</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+            </form>
+        </div>
+        <!-- ==^^^CREATE POST^^^== -->
+
+        <div class="local-posts">
+            <h5>What's In Your Feed?</h5>
+            <!-- =====POST===== -->
+            {{#each posts}}
+            <div class="post">
+                <div class="text-bubble">
+                    <div class="bubble z-depth-1">
+                        <p class="body-text">
+                            {{this.Body}}
+                        </p>
+                    </div>
+                    <div class="triangle-right"></div>
+                    <div class="icon">
+                        <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                        <span class="icon-name">
+                            {{this.Author.UserName}}
+                        </span>
+                    </div>
+                    <div class="post-info">
+                        <span class="topics">Topics:
+                            {{Tags}}
+                            {{!-- {{#each Tags}}
+                            {{this}}
+                            {{/each}} --}}
+                        </span>
+                        <span class="time-stamp">Posted {{this.createdAt}}</span>
+                    </div>
+                </div>
+            </div>
+                {{/each}}
+            <!-- ===^^LOCAL POST^^=== -->
+            <!-- USER POSTS -->
+            <div class="user-posts">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD SPACE -->
+    <div id="ad-space" class="col m2">
+        <h4>Ad Space</h4>
+        <p>AIDSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADS</p>
+    </div>
+    
+</div>

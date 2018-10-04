@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "password": "redditminus",
+    "database": "blueit",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": "redditminus",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
