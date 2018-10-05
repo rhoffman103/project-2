@@ -118,10 +118,12 @@
             </form>
         </div>
         <!-- ==^^^CREATE POST^^^== -->
-        {{!-- {{> posts}} --}}
+        {{!-- <p>local</p>
+         --}}
 
         <div class="local-posts">
             <h5>What's In Your Feed?</h5>
+            <h2>All Posts</h2>
             <!-- =====POST===== -->
             {{#each posts}}
             <div class="post">
@@ -139,6 +141,7 @@
                         </span>
                     </div>
                     <div class="post-info">
+                        <p>Postal: {{this.Location}}</p>
                         <span class="topics">Topics:
                             {{Tags}}
                             {{!-- {{#each Tags}}
