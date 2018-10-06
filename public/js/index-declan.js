@@ -1,4 +1,4 @@
-//Dummy user data
+// Dummy user data
 // $.post("/api/testuser", {
 //   UserName: "ErnestHemingway"
 // });
