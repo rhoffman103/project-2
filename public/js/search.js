@@ -46,18 +46,20 @@ $(document).ready(() => {
 
                 var userPosts = $(`
                 <div class="post">
-                    <div class="bubble z-depth-1">
-                        <p>${element.Body}</p>
-                    </div>
-                    <div class="triangle-right"></div>
-                    <div class="icon">
-                        <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                        ${data.UserName}
-                    </div>
-                    <div class="post-info">
-                        <span id="tags">Topics: ${element.Tags}Stuff, Sports, Food</span>
-                        ||
-                        <span id="time-stamp">${element.createdAt}</span>
+                    <div class="text-bubble">
+                        <div class="bubble z-depth-1">
+                            <p class="body-text">${element.Body}</p>
+                        </div>
+                        <div class="triangle-right"></div>
+                        <div class="icon">
+                            <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                            <span class="icon-name">${data.UserName}</span>
+                        </div>
+                        <div class="post-info">
+                            <p>Postal: ${element.Location}</p>
+                            <span id="tags">Topics: ${element.Tags}</span>
+                            <span id="time-stamp">${element.createdAt}</span>
+                        </div>
                     </div>
                 </div>`)
                 $(userPosts).appendTo($(".user-posts"));
