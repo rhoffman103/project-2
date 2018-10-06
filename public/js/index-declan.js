@@ -1,20 +1,17 @@
-let zipCode;
-$.post("/").then(data => {
-  geolocator.config(data.config);
-  geolocator.locate(data.options, function (err, location) {
-      if (err) return console.log(err);
-      console.log(err || location);
-      zipCode = location.address.postalCode;
-      console.log(zipCode); //03824
-      $.post(`/api/post/get`, {
-        Location: zipCode,
-        Tag: "tags", 
-      });
-  });
-});
-
-
 $(document).ready(() => {
+  let zipCode;
+  $.post("/").then(data => {
+    geolocator.config(data.config);
+    geolocator.locate(data.options, function (err, location) {
+        if (err) return console.log(err);
+        console.log(err || location);
+        zipCode = location.address.postalCode;
+        console.log(zipCode); //03824
+    });
+  });
+
+  $.get(`/api/post/get/?l=${zipCode}&t=tags`);
+
   $("#submit").on("click", function() {
     console.log(zipCode)
     const $tags = []

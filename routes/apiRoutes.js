@@ -38,11 +38,12 @@ module.exports = function(app) {
     );
   });
 
-  app.post("/api/post/get", function(req, res) {
+  app.get("/api/post/get/", function(req, res) {
+    console.log(req.query);
     db.Posts.findAll({
       where: {
-        // Location: zipCode,
-        // tags: {[Sequelize.Op.regexp]: '(tags)'}
+        // Location: req.query.l,
+        tags: {[Sequelize.Op.regexp]: `(${req.query.t})`}
       },
       include: [db.Authors],
       order: [['updatedAt', 'DESC']]
