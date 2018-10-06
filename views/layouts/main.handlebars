@@ -15,14 +15,14 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/popper.js"></script>
     <script src="/js/search.js"></script>
-    <script src="/js/geolocator.js"></script>
     <script src="/js/index-declan.js"></script>
     <script src="/js/socket.io.js"></script>
+    <script src="https://unpkg.com/taggle@1.14.0/src/taggle.js"></script>
     <script>
       $(function () {
         var socket = io();
         $('#submit').on('click', function() {
-          socket.emit('chat message', $('#textarea2').val().trim());
+          socket.emit('chat message', $('#body').val().trim());
           $('#textarea2').val('');
           return false;
         });

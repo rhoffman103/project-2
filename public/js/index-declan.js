@@ -1,12 +1,33 @@
-$(document).ready(() => {
+let zipCode;
+$.post("/").then(data => {
+  geolocator.config(data.config);
+  geolocator.locate(data.options, function (err, location) {
+      if (err) return console.log(err);
+      console.log(err || location);
+      zipCode = location.address.postalCode;
+      console.log(zipCode); //03824
+      $.post(`/api/post/get`, {
+        Location: zipCode,
+        Tag: "tags", 
+      });
+  });
+});
 
+
+$(document).ready(() => {
   $("#submit").on("click", function() {
-    console.log("The submit button was clicked!");
-    const body = $("#textarea2").val().trim();
+    console.log(zipCode)
+    const $tags = []
+    $.each($(".taggle"), function(value, index){
+       const tag = $(this).text();
+       $tags.push(tag.replace(/(\u00D7)/g, ''));
+    });
+    console.log($tags);
+    const body = $("#body").val().trim();
     $.post("/api/post/add", {
-      Location: "03825",
+      Location: zipCode,
       Body: body,
-      Tags: JSON.stringify(["Magic", "Children"]),
+      Tags: JSON.stringify($tags),
       Public: true,
       Rating: 15,
       AuthorID: "2e613caf-7a37-45e1-9b0e-290690dce9db"

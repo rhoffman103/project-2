@@ -2,6 +2,57 @@ var db = require("../models");
 var Sequelize = require("sequelize");
 
 module.exports = function(app) {
+   // blueit home page
+  app.get("/", (req, res) => {
+    // Load blueit page
+    res.render("blueit");
+  });
+
+  // Render 404 page for any unmatched routes
+  // app.get("*", function(req, res) {
+  //   res.render("404");
+  // });
+
+  // Initial get
+  app.post("/", function(req, res) {
+    res.json(
+      {config:
+        {
+          language: "en",
+            google: {
+              version: "3",
+              key: "AIzaSyD5oLXzPS0A9N-z3VYZc0rnGu5yVuyK9Xg"
+          }
+        },
+        options: {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumWait: 10000,     // max wait time for desired accuracy
+          maximumAge: 0,          // disable cache
+          desiredAccuracy: 30,    // meters
+          fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+          addressLookup: true,   // requires Google API key if true
+          timezone: false,        // requires Google API key if true
+        }
+      }
+    );
+  });
+
+  app.post("/api/post/get", function(req, res) {
+    db.Posts.findAll({
+      where: {
+        // Location: zipCode,
+        // tags: {[Sequelize.Op.regexp]: '(tags)'}
+      },
+      include: [db.Authors],
+      order: [['updatedAt', 'DESC']]
+    }).then(function(dbPosts) {
+      console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+      res.render("blueit", {
+        posts: dbPosts
+      });
+    });
+  });
 
   // Add new post
   app.post("/api/post/add", function(req, res) {
