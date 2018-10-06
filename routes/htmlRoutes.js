@@ -1,8 +1,8 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function(http) {
   // Load index page
-  app.get("/", function(req, res) {
+  http.get("/", function(req, res) {
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
         msg: "Welcome!",
@@ -12,7 +12,7 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
+  http.get("/example/:id", function(req, res) {
     db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("example", {
         example: dbExample
@@ -21,12 +21,13 @@ module.exports = function(app) {
   });
 
    // blueit home page
-   app.get("/blueit", (req, res) => {
+   http.get("/blueit", (req, res) => {
     // // Load blueit page
     db.Posts.findAll({
-      include: [db.Authors]
+      include: [db.Authors],
+      order: [['updatedAt', 'DESC']]
     }).then(function(dbPosts) {
-      console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+      // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
       res.render("blueit", {
         posts: dbPosts
       });
@@ -34,7 +35,7 @@ module.exports = function(app) {
   });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  http.get("*", function(req, res) {
     res.render("404");
   });
 };

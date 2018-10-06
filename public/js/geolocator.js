@@ -23,4 +23,4 @@ $(document).ready(() => {
             console.log(err || location);
         });
     };
-})
+});

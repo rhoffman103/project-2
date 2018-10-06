@@ -12,6 +12,25 @@
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main1.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.3/geolocator.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js"></script>
+    <script src="/js/search.js"></script>
+    <script src="/js/geolocator.js"></script>
+    <script src="/js/index-declan.js"></script>
+    <script src="/js/socket.io.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('#submit').on('click', function() {
+          socket.emit('chat message', $('#textarea2').val().trim());
+          $('#textarea2').val('');
+          return false;
+        });
+        socket.on('newpost', function(){
+          location.reload();
+        });
+      });
+    </script>
     
 
   <title>Home Page</title>
@@ -21,11 +40,7 @@
 
   {{{body}}}
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/popper.js"></script>
-  <script src="/js/search.js"></script>
-  <script src="/js/geolocator.js"></script>
-  <script src="/js/index-declan.js"></script>
+  
 
 </body>
 
