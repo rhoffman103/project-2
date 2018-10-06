@@ -3,6 +3,22 @@ var Sequelize = require("sequelize");
 
 module.exports = function(app) {
 
+  app.get("/api/post/get", function(req, res) {
+    console.log(req.query);
+    db.Posts.findAll({
+      where: {
+        Location: req.query.l
+        // Tags: {[Sequelize.Op.regexp]: `(${req.query.t})`}
+      },
+      include: [db.Authors],
+      order: [['updatedAt', 'DESC']]
+    }).then(function(dbPosts) {
+      res.render("blueit", {
+        posts: dbPosts
+      });
+    });
+  });
+
   // Add new post
   app.post("/api/testadd", function(req, res) {
     console.log(req.body);
@@ -16,7 +32,7 @@ module.exports = function(app) {
     }).then(function(dbAuthor) {
       res.json(dbAuthor);
     });
-  })
+  });
 
   //Get Posts by Author
   app.get("/api/testget/author/:authorID", function(req, res) {
