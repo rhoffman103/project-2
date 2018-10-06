@@ -5,18 +5,23 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <span id="title">BlueIt</span>
             <ul id="nav-mobile" class="right hide-on-med-and-down row">
-                <div class="col s2">
-                    <span>Login:</span>
+                <div id="login">
+                    <div class="col s2">
+                        <span>Login:</span>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
                 </div>
-                <div class="input-field col s5">
-                    <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
+                <div id="logged-in">
+                    <div class="logged-in-icon" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                    <span class="logged-in-name">Sample Name Here</span>
                 </div>
-                <div class="input-field col s5">
-                    <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
-
             </ul>
         </div>
     </nav>
@@ -25,15 +30,21 @@
 
 <!-- =====SLIDE OUT===== -->
 <ul id="slide-out" class="sidenav">
-    <h5>Login:</h5>
-    <hr>
-    <div class="input-field col s5">
-        <input id="email-slide" type="email" class="validate">
-        <label for="email-slide">Email</label>
+    <div id="side-login">
+        <h5>Login:</h5>
+        <hr>
+        <div class="input-field col s5">
+            <input id="email-slide" type="email" class="validate">
+            <label for="email-slide">Email</label>
+        </div>
+        <div class="input-field col s5">
+            <input id="password-slide" type="password" class="validate">
+            <label for="password-slide">Password</label>
+        </div>
     </div>
-    <div class="input-field col s5">
-        <input id="password-slide" type="password" class="validate">
-        <label for="password-slide">Password</label>
+    <div id="side-logged-in">
+        <div class="logged-in-icon" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+        <span class="logged-in-name">Sample Name Here</span>
     </div>
     <h5>Filter Posts</h5>
     <hr>
@@ -101,7 +112,7 @@
     <div id="post-feed" class="col m7">
 
         <!-- =====CREATE POST===== -->
-        <div class="post add-post">
+        <div class="post add-post animated fadeInUp">
             <h5>Add Your Post</h5>
             <form>
                 <select multiple>
@@ -119,14 +130,14 @@
         </div>
         <!-- ==^^^CREATE POST^^^== -->
         {{!-- <p>local</p>
-         --}}
+        --}}
 
         <div class="local-posts">
             <h5>What's In Your Feed?</h5>
             <h2>All Posts</h2>
             <!-- =====POST===== -->
             {{#each posts}}
-            <div class="post">
+            <div class="post animated fadeInUp">
                 <div class="text-bubble">
                     <div class="bubble z-depth-1">
                         <p class="body-text">
@@ -134,35 +145,39 @@
                         </p>
                     </div>
                     <div class="triangle-right"></div>
-                    <div class="icon">
-                        <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                        <span class="icon-name">
-                            {{this.Author.UserName}}
-                        </span>
-                    </div>
-                    <div class="post-info">
-                        <p>Postal: {{this.Location}}</p>
-                        <span class="topics">Topics:
-                            {{Tags}}
-                            {{!-- {{#each Tags}}
-                            {{this}}
-                            {{/each}} --}}
-                        </span>
-                        <span class="time-stamp">Posted {{this.createdAt}}</span>
-                    </div>
+                </div>
+                
+                <div class="icon">
+                    <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
+                    <span class="icon-name">
+                        {{this.Author.UserName}}
+                    </span>
+                </div>
+                <div class="post-info">
+                    <p>Postal: {{this.Location}}</p>
+                    <span class="topics">Topics:
+                        {{Tags}}
+                        {{!-- {{#each Tags}}
+                        {{this}}
+                        {{/each}} --}}
+                    </span>
+                    <span class="time-stamp">Posted {{this.createdAt}}</span>
                 </div>
             </div>
-                {{/each}}
-            <!-- ===^^LOCAL POST^^=== -->
         </div>
-         <!-- USER POSTS -->
+        {{/each}}
+        <!-- ===^^LOCAL POST^^=== -->
+
+        <!-- USER POSTS -->
         <div class="user-posts"></div>
+
     </div>
+
 
     <!-- ADD SPACE -->
     <div id="ad-space" class="col m2">
         <h4>Ad Space</h4>
-        <p>AIDSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADS</p>
+        <p>ADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADS</p>
     </div>
-    
+
 </div>
