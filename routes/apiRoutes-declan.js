@@ -89,6 +89,22 @@ module.exports = function(app) {
     });
   });
 
+  // RENDER POSTS BY LOCATION
+  app.get("/api/posts/:location", (req, res) => {
+    db.Posts.findAll({
+      where: {
+        Location: req.params.location
+      },
+      include: [db.Authors]
+    }).then(dbPosts => {
+      res.json(dbPosts);
+      // res.render("posts", {
+      //   posts: dbPosts
+      // });
+    });
+  });
+
+
   app.delete("/api/authors/:id", function(req, res) {
     db.Authors.destroy({
       where: {

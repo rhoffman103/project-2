@@ -69,6 +69,28 @@ body {
 
 /* ^^^POST^^^ */
 
+.logged-in-icon {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logged-in-name {
+    font-weight: bold;
+}
+
+.logged-in-icon, .logged-in-name {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#logged-in, #side-logged-in {
+    display: none;
+}
+
 #title {
     font-family: 'Leckerli One', cursive;
     font-size: 28pt;
@@ -99,7 +121,7 @@ hr {
     padding: 5px;
 }
 
-.btn{
+.btn {
     background-color: #69D2E7;
 }
 
@@ -147,10 +169,15 @@ hr {
         display: none;
     }
     #post-feed {
-        width: 75%;
+        width: 100%;
     }
     #ad-space {
-        width: 15%;
+        position: fixed;
+        z-index: 100;
+        bottom: 10px;
+        left: 20px;
+        height: 160px;
+        width: 95%;
     }
 }
 
