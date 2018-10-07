@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "SuperSecretPasswordHere",
+    "password": "Sterling",
     "database": "blueit",
     "host": "localhost",
     "dialect": "mysql"
