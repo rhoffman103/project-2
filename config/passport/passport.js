@@ -34,8 +34,7 @@ module.exports = function (passport, user) {
                         data = {
                             email: email,
                             password: userPassword,
-                            firstname: req.body.firstname,
-                            lastname: req.body.lastname
+                            UserName: req.body.UserName
                         };
 
                     User.create(data).then(function (newUser, created) {
@@ -53,7 +52,7 @@ module.exports = function (passport, user) {
     ));
     //serialize
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.ID);
     });
 
     // deserialize user 
