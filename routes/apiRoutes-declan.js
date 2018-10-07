@@ -4,10 +4,8 @@ var Sequelize = require("sequelize");
 module.exports = function(app) {
 
   app.get("/api/post/get", function(req, res) {
-    console.log(req.query);
     db.Posts.findAll({
       where: {
-        Location: req.query.l
         // Tags: {[Sequelize.Op.regexp]: `(${req.query.t})`}
       },
       include: [db.Authors],
