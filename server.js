@@ -32,12 +32,14 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+
+
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/apiRoutes-declan")(app);
 require("./routes/htmlRoutes")(app);
-require('./routes/auth')(app);
-var authRoute = require('./config/passport/passport.js')(passport, db.author); //Load Passport Strategies
+var authroute = require('./routes/auth')(app, passport);
+require('./config/passport/passport.js')(passport, db.author); //Load Passport Strategies
 
 var syncOptions = { force: false };
 
