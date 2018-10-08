@@ -32,10 +32,14 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-
+// Global variables
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null;
+  next();
+});
 
 // Routes
-var authRoute = require('./routes/auth')(app, passport);
+require('./routes/auth')(app, passport);
 require('./config/passport/passport.js')(passport, db.Authors); //Load Passport Strategies
 require("./routes/apiRoutes")(app);
 require("./routes/apiRoutes-declan")(app);

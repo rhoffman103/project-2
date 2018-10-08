@@ -7,29 +7,31 @@ $(document).ready(() => {
   // Post Inputs
   var postBody = $("#texterea2");
   var zip = $("#zip");
-  var topics = $("#topic").parent().children("input").val();
-  var rating = $("#rating").parent().children("input").val();
+  var topics = $("#topic")
+    .parent()
+    .children("input")
+    .val();
+  var rating = $("#rating")
+    .parent()
+    .children("input")
+    .val();
 
   // A function for handling what happens when the form to create a new post is submitted
   function handleFormSubmit(event) {
     event.preventDefault();
     // Wont submit the post if we are missing a body, title, or author
-    if (
-      !postBody.val().trim() ||
-      !zip.val().trim()
-    ) {
+    if (!postBody.val().trim() || !zip.val().trim()) {
       return;
     }
-    $.get("/api/usersearch/" + user, data => {
-            console.log(data);
+    $.get("/api/usersearch/" + userName, data => {
+      console.log(data);
     });
     // Constructing a newPost object to hand to the database
     var newPost = {
       Location: titleInput.val().trim(),
       Body: bodyInput.val().trim(),
-      AuthorID: authorSelect.val(),
       Public: true,
-      UserName: "someone",
+      AuthorID: userID,
       Topics: topics,
       Rating: rating
     };
@@ -42,4 +44,11 @@ $(document).ready(() => {
       window.location.href = "/blog";
     });
   }
+});
+
+$(document).on("click", "#user-name", function() {
+  var userName = $("#user-name");
+  $.get("/api/usersearch/" + userName, data => {
+    console.log(data[0])
+  });
 });

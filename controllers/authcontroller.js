@@ -15,6 +15,7 @@ exports.signup = function (req, res) {
 };
 
 exports.signin = (req, res) => {
+    // console.log("username: " + req.user.UserName)
     db.Posts.findAll({
         include: [db.Authors]
     }).then(function (dbPosts) {
@@ -22,7 +23,8 @@ exports.signin = (req, res) => {
         res.render("blueit", {
             posts: dbPosts,
             findPosts: true,
-            signMeIn: true
+            signMeIn: true,
+            // userName: req.user.UserName
         });
     });
 };
