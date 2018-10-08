@@ -11,7 +11,8 @@
                 {{/if}}
 
                 {{#if user}}
-                    <p id="user-name">{{user.UserName}}</p>>
+                    <span id="user-name">{{user.UserName}}</span>
+                    <span><a href="/logout">logout</a></span>
                 {{/if}}
                 
                 <div id="logged-in">
@@ -135,7 +136,7 @@
                         <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
                         <label for="textarea2">What's on your mind?</label>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                    <button class="btn waves-effect waves-light" id="submit-post">Submit</button>
                 </form>
             </div>
         {{/unless}}

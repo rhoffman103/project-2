@@ -8,7 +8,7 @@ $(document).ready(() => {
 
                 $('.userNameList').html('')
 
-                // console.log(data);
+                console.log(data[0]);
 
                 data.forEach((element, index) => {
                     // console.log(element.name);

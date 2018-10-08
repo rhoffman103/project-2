@@ -23,9 +23,14 @@ $(document).ready(() => {
     if (!postBody.val().trim() || !zip.val().trim()) {
       return;
     }
+
+    var userName = $("#user-name").text();
+    var userID = "";
+
     $.get("/api/usersearch/" + userName, data => {
-      console.log(data);
+      userID = data[0].ID;
     });
+    console.log(userID)
     // Constructing a newPost object to hand to the database
     var newPost = {
       Location: titleInput.val().trim(),
@@ -40,15 +45,13 @@ $(document).ready(() => {
 
   // Submits a new post and brings user to blog page upon completion
   function submitPost(post) {
-    $.post("/api/posts", post, function() {
-      window.location.href = "/blog";
+    $.post("/api/testadd", post, function() {
+      // window.location.href = "/blog";
+      console.log("post \n" + post)
     });
   }
 });
 
-$(document).on("click", "#user-name", function() {
-  var userName = $("#user-name");
-  $.get("/api/usersearch/" + userName, data => {
-    console.log(data[0])
-  });
+$(document).on("click", "#submit-post", function(event) {
+  handleFormSubmit(event)
 });

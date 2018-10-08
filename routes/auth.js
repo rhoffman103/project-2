@@ -37,5 +37,12 @@ module.exports = function (app, passport) {
         console.log(req.user.UserName)
         res.redirect('/blueit')
 });
+
+    app.get('/logout', function (req, res) {
+        req.session.destroy(function (err) {
+            res.redirect("/");
+        });
+    });
+
 }
 
