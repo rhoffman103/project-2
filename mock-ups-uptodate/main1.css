@@ -91,6 +91,10 @@ body {
     display: none;
 }
 
+#login, #side-login{
+    display: block;
+}
+
 #title {
     font-family: 'Leckerli One', cursive;
     font-size: 28pt;
