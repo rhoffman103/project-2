@@ -1,18 +1,39 @@
-var exports = module.exports = {}
+var exports = (module.exports = {});
+var db = require("../models");
 
 exports.signup = function (req, res) {
-    res.render('signup');
-}
+    db.Posts.findAll({
+        include: [db.Authors]
+    }).then(function (dbPosts) {
+        // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+        res.render("blueit", {
+            posts: dbPosts,
+            findPosts: true,
+            signMeUp: true
+        });
+    });
+};
 
-exports.signin = function (req, res) {
-    res.render('signin');
-}
+exports.signin = (req, res) => {
+    db.Posts.findAll({
+        include: [db.Authors]
+    }).then(function (dbPosts) {
+        // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+        res.render("blueit", {
+            posts: dbPosts,
+            findPosts: true,
+            signMeIn: true
+        });
+    });
+};
+
+
 
 exports.dashboard = function (req, res) {
-    res.render('dashboard');
-}
+    res.render("dashboard");
+};
 exports.logout = function (req, res) {
     req.session.destroy(function (err) {
-        res.redirect('/');
+        res.redirect("/");
     });
-}
+};

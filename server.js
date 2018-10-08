@@ -35,7 +35,7 @@ app.set("view engine", "handlebars");
 
 
 // Routes
-require('./routes/auth')(app, passport);
+var authRoute = require('./routes/auth')(app, passport);
 require('./config/passport/passport.js')(passport, db.Authors); //Load Passport Strategies
 require("./routes/apiRoutes")(app);
 require("./routes/apiRoutes-declan")(app);
@@ -47,7 +47,7 @@ var syncOptions = { force: false };
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
-  syncOptions.force = true;
+  syncOptions.force = false;
 }
 
 
