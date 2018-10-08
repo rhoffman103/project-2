@@ -5,19 +5,11 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <span id="title">BlueIt</span>
             <ul id="nav-mobile" class="right hide-on-med-and-down row">
-                <div id="login">
-                    <div class="col s2">
-                        <span>Login:</span>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="email" type="email" class="validate">
-                        <label for="email">Email</label>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
-                    </div>
-                </div>
+
+                {{#if signMeIn}}
+                    {{> signin}}
+                {{/if}}
+                
                 <div id="logged-in">
                     <div class="logged-in-icon"></div>
                     <span class="logged-in-name">Sample Name Here</span>
@@ -111,23 +103,30 @@
     {{!-- POST FEED --}}
     <div id="post-feed" class="col m9">
 
+        {{!-- SIGN UP --}}
+        {{#if signMeUp}}
+            {{> signup}}
+        {{/if}}
+
         <!-- =====CREATE POST===== -->
-        <div class="post add-post animated fadeInUp">
-            <h5>Add Your Post</h5>
-            <form>
-                <select multiple>
-                    <option value="" disabled selected>Topics</option>
-                    <option value="1">Sports</option>
-                    <option value="2">Movies</option>
-                    <option value="3">Food</option>
-                </select>
-                <div class="input-field">
-                    <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
-                    <label for="textarea2">What's on your mind?</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
-            </form>
-        </div>
+        {{#unless signMeUp}}
+            <div class="post add-post animated fadeInUp">
+                <h5>Add Your Post</h5>
+                <form>
+                    <select multiple>
+                        <option value="" disabled selected>Topics</option>
+                        <option value="1">Sports</option>
+                        <option value="2">Movies</option>
+                        <option value="3">Food</option>
+                    </select>
+                    <div class="input-field">
+                        <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                        <label for="textarea2">What's on your mind?</label>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                </form>
+            </div>
+        {{/unless}}
         <!-- ==^^^CREATE POST^^^== -->
         <!-- <a href="/api/authors/JKRowling">jk</a> -->
         {{!-- POSTS --}}

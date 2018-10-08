@@ -1,30 +1,20 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Load index page
-  app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
-  });
+  // blueit home page (logged out)
+  // app.get("/", (req, res) => {
+  //   db.Posts.findAll({
+  //     include: [db.Authors]
+  //   }).then(function(dbPosts) {
+  //     // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
+  //     res.render("blueit", {
+  //       posts: dbPosts,
+  //       findPosts: true
+  //     });
+  //   });
+  // });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
-  });
-
-  // blueit home page
+  // blueit home page (logged in)
   app.get("/blueit", (req, res) => {
     db.Posts.findAll({
       include: [db.Authors]
@@ -32,7 +22,8 @@ module.exports = function(app) {
       // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
       res.render("blueit", {
         posts: dbPosts,
-        findPosts: true
+        findPosts: true,
+        loggedIn: true
       });
     });
   });
