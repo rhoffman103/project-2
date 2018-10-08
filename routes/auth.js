@@ -13,6 +13,4 @@ module.exports = function (app, passport) {
         successRedirect: '/blueit',
         failureRedirect: '/signin'
     }));
-
-    app.get('/logout', authController.logout);
 }

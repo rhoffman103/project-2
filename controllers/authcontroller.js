@@ -1,10 +1,10 @@
 var exports = (module.exports = {});
 var db = require("../models");
 
-exports.signup = function(req, res) {
+exports.signup = function (req, res) {
     db.Posts.findAll({
         include: [db.Authors]
-    }).then(function(dbPosts) {
+    }).then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
         res.render("blueit", {
             posts: dbPosts,
@@ -14,10 +14,10 @@ exports.signup = function(req, res) {
     });
 };
 
-exports.signin = function(req, res) {
+exports.signin = (req, res) => {
     db.Posts.findAll({
         include: [db.Authors]
-    }).then(function(dbPosts) {
+    }).then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
         res.render("blueit", {
             posts: dbPosts,
@@ -27,11 +27,13 @@ exports.signin = function(req, res) {
     });
 };
 
-exports.dashboard = function(req, res) {
-  res.render("dashboard");
+
+
+exports.dashboard = function (req, res) {
+    res.render("dashboard");
 };
-exports.logout = function(req, res) {
-    req.session.destroy(function(err) {
+exports.logout = function (req, res) {
+    req.session.destroy(function (err) {
         res.redirect("/");
     });
 };
