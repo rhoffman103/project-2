@@ -75,6 +75,7 @@ $(document).ready(() => {
             if (err) return console.log(err);
             console.log(err || location);
             if (location) {
+                sessionStorage.setItem('location', location.address.postalCode);
                 // renderLocalPosts(location.address.postalCode)
             }
             else {
