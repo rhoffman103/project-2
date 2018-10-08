@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "SuperSecretPasswordHere",
+    "password": "redditminus",
     "database": "blueit",
     "host": "localhost",
     "dialect": "mysql"

@@ -31,7 +31,7 @@
 //   Tags: JSON.stringify(["Science", "Fiction"]),
 //   Public: true,
 //   Rating: 0,
-//   AuthorID: "6fe65982-f35a-4820-bf8c-c533d0237aa2"
+//   AuthorID: "b7dde54b-6c68-45ae-a887-f36b274434ac"
 // });
 // $.post("/api/testadd", {
 //   Location: "04090",
@@ -39,7 +39,7 @@
 //   Tags: JSON.stringify(["Big", "Brother"]),
 //   Public: true,
 //   Rating: 11111,
-//   AuthorID: "c80e7f4a-16f0-4eb8-821e-936a4898a832"
+//   AuthorID: "ae2decf4-ab86-48ac-8b75-bc2438c46389"
 // });
 // $.post("/api/testadd", {
 //   Location: "03825",
@@ -47,7 +47,7 @@
 //   Tags: JSON.stringify(["Kill", "Your Parents"]),
 //   Public: true,
 //   Rating: 555555,
-//   AuthorID: "6fe65982-f35a-4820-bf8c-c533d0237aa2"
+//   AuthorID: "b7dde54b-6c68-45ae-a887-f36b274434ac"
 // });
 // $.post("/api/testadd", {
 //   Location: "04090",
@@ -55,7 +55,7 @@
 //   Tags: JSON.stringify(["Sports", "Entertainment"]),
 //   Public: true,
 //   Rating: 888888,
-//   AuthorID: "a68257c8-7934-4f9a-aa39-e04123bbefb5"
+//   AuthorID: "8d2ffb6c-ccec-4850-a7a8-84ec1fbc30fe"
 // });
 // $.post("/api/testadd", {
 //   Location: "03825",
@@ -63,7 +63,7 @@
 //   Tags: JSON.stringify(["Sports", "Entertainment"]),
 //   Public: true,
 //   Rating: 999999,
-//   AuthorID: "97b5555a-6f87-4187-adb8-6f13efe831f3"
+//   AuthorID: "3bd3732b-7c30-45e1-ad1f-c00b532ece63"
 // });
 
 //Get by author

@@ -80,12 +80,14 @@ module.exports = function(app) {
         UserName: req.params.name
       },
       include: [db.Posts]
-    }).then(function(dbAuthor) {
-      res.json(dbAuthor);
-      console.log(dbAuthor);
-      // res.render("index", {
-      //   user: dbAuthor
-      // })
+    }).then(function(dbPosts) {
+      // res.json(dbPosts);
+      console.log(dbPosts);
+      res.render("posts", {
+        posts: dbPosts,
+        findUser: true,
+        findPosts: false
+      })
     });
   });
 
