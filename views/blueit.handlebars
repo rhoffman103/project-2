@@ -120,7 +120,7 @@
                 <form>
                     <div class="row">
                         <div class="col m7">
-                            <select multiple>
+                            <select id="topics" multiple>
                                 <option value="" disabled selected>Topics</option>
                                 <option value="1">Sports</option>
                                 <option value="2">Movies</option>
@@ -136,8 +136,8 @@
                         <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
                         <label for="textarea2">What's on your mind?</label>
                     </div>
-                    <button class="btn waves-effect waves-light" id="submit-post">Submit</button>
                 </form>
+                <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
             </div>
         {{/unless}}
         <!-- ==^^^CREATE POST^^^== -->
