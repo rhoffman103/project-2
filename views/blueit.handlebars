@@ -5,19 +5,16 @@
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <span id="title">BlueIt</span>
             <ul id="nav-mobile" class="right hide-on-med-and-down row">
-                <div id="login">
-                    <div class="col s2">
-                        <span>Login:</span>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="email" type="email" class="validate">
-                        <label for="email">Email</label>
-                    </div>
-                    <div class="input-field col s5">
-                        <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
-                    </div>
-                </div>
+
+                {{#if signMeIn}}
+                    {{> signin}}
+                {{/if}}
+
+                {{#if user}}
+                    <span id="user-name">{{user.UserName}}</span>
+                    <span><a href="/logout">logout</a></span>
+                {{/if}}
+                
                 <div id="logged-in">
                     <div class="logged-in-icon"></div>
                     <span class="logged-in-name">Sample Name Here</span>
@@ -83,7 +80,7 @@
         <hr>
         <form>
             <h6>Location:</h6>
-            <input id="location" type="text" placeholder="Zip Code">
+            <input id="side-nav-location" type="text" placeholder="Zip Code">
             <h6>Serch Topics:</h6>
             <select multiple>
                 <option value="" disabled selected>Topics</option>
@@ -109,75 +106,74 @@
     </div>
     <!-- ==^^^SIDE NAV^^^== -->
     {{!-- POST FEED --}}
-    <div id="post-feed" class="col m7">
+    <div id="post-feed" class="col m9">
+
+        {{!-- SIGN UP --}}
+        {{#if signMeUp}}
+            {{> signup}}
+        {{/if}}
 
         <!-- =====CREATE POST===== -->
-        <div class="post add-post animated fadeInUp">
-            <h5>Add Your Post</h5>
-            <form>
-                <select multiple>
-                    <option value="" disabled selected>Topics</option>
-                    <option value="1">Sports</option>
-                    <option value="2">Movies</option>
-                    <option value="3">Food</option>
-                </select>
-                <div class="input-field">
-                    <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
-                    <label for="textarea2">What's on your mind?</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
-            </form>
-        </div>
+        {{#unless signMeUp}}
+            <div class="post add-post animated fadeInUp">
+                <h5>Add Your Post</h5>
+                <form>
+                    <div class="row">
+                        <div class="col m7">
+                            <select id="topics" multiple>
+                                <option value="" disabled selected>Topics</option>
+                                <option value="1">Sports</option>
+                                <option value="2">Movies</option>
+                                <option value="3">Food</option>
+                            </select>
+                        </div>
+                        <div class="input-field col m5">
+                            <input placeholder="" id="zip" type="text" class="validate">
+                            <label for="zip">zip</label>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                        <label for="textarea2">What's on your mind?</label>
+                    </div>
+                </form>
+                <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
+            </div>
+        {{/unless}}
         <!-- ==^^^CREATE POST^^^== -->
-        {{!-- <p>local</p>
-        --}}
+        <!-- <a href="/api/authors/JKRowling">jk</a> -->
+        {{!-- POSTS --}}
+        <div class="all-posts">
+            <h5>What's In Your Feed?</h5>
+            {{#if findPosts}}
+                {{#unless findUser}}
+                    <h2>All Posts</h2>
+                    {{> posts}}
+                {{/unless}}
+            {{/if}}
+        </div>
 
         <div class="local-posts">
-            <h5>What's In Your Feed?</h5>
-            <h2>All Posts</h2>
-            <!-- =====POST===== -->
-            {{#each posts}}
-            <div class="post animated fadeInUp">
-                <div class="text-bubble">
-                    <div class="bubble z-depth-1">
-                        <p class="body-text">
-                            {{this.Body}}
-                        </p>
-                    </div>
-                    <div class="triangle-right"></div>
-                </div>
-                
-                <div class="icon">
-                    <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                    <span class="icon-name">
-                        {{this.Author.UserName}}
-                    </span>
-                </div>
-                <div class="post-info">
-                    <p>Postal: {{this.Location}}</p>
-                    <span class="topics">Topics:
-                        {{Tags}}
-                        {{!-- {{#each Tags}}
-                        {{this}}
-                        {{/each}} --}}
-                    </span>
-                    <span class="time-stamp">Posted {{this.createdAt}}</span>
-                </div>
-            </div>
+            {{#if findLocal}}
+                <h2>Local Posts</h2>
+                {{> local-posts}}
+            {{/if}}
         </div>
-        {{/each}}
-        <!-- ===^^LOCAL POST^^=== -->
 
-        <!-- USER POSTS -->
-        <div class="user-posts"></div>
+        <div class="user-posts">
+            {{#if findUser}}
+                <h2>{{user}}'s Posts</h2>
+                {{> userPosts}}
+            {{/if}}
+        </div>
 
     </div>
 
 
     <!-- ADD SPACE -->
-    <div id="ad-space" class="col m2">
+    {{!-- <div id="ad-space" class="col m2">
         <h4>Ad Space</h4>
         <p>ADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADSADS</p>
-    </div>
+    </div> --}}
 
 </div>

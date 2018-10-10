@@ -8,20 +8,28 @@ $(document).ready(() => {
 
                 $('.userNameList').html('')
 
-                // console.log(data);
+                console.log(data[0]);
 
-                data.forEach(element => {
+                data.forEach((element, index) => {
                     // console.log(element.name);
                     var li = $('<li>');
-                    $(li).addClass('username')
-                        .html(element.UserName)
+                    $(li).addClass('username li-' + index)
                         .appendTo($('.userNameList'));
+
+                    var a = $("<a>").attr("href", "/blueit/" + element.UserName)
+                        .html(element.UserName);
+                    $(a).appendTo($(".li-" + index))  ;                  
                 })
             })
         }
         else if($(".search-text").val() === "") {
             $('.userNameList').empty();
         }
+    }
+
+    const userPosts = name => {
+        $.get("/blueit/" + name, data => {
+        })
     }
 
     // Render a users posts
@@ -84,7 +92,8 @@ $(document).ready(() => {
 
     // click to retrieve users posts
     $('body').on( "click", ".username", (e) => {
-        renderUserPosts(e.currentTarget.innerHTML);
+        // renderUserPosts(e.currentTarget.innerHTML);
+        userPosts(e.currentTarget.innerHTML);
         $('.userNameList').empty();
       });
 });
