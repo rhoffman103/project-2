@@ -1,4 +1,5 @@
 var db = require("../models");
+
 const isAuthenticated = require("../config/passport/isAuthenticated.js");
 
 module.exports = function(app) {
@@ -48,10 +49,11 @@ module.exports = function(app) {
       where: {
         Location: req.params.location
       },
-      include: [db.Authors]
+      include: [db.Tag, db.Authors]
     }).then(dbPosts => {
       // res.json(dbPosts);
       res.render("blueit", {
+        zip: req.params.location,
         posts: dbPosts,
         postal: true
       });
