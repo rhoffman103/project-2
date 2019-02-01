@@ -3,7 +3,7 @@
     <nav>
         <div class="nav-wrapper container">
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <span id="title">BlueIt</span>
+            <span id="title"><a href="/blueit">BlueIt</a></span>
             <ul id="nav-mobile" class="right hide-on-med-and-down row">
 
                 {{#if signMeIn}}
@@ -11,14 +11,10 @@
                 {{/if}}
 
                 {{#if user}}
-                    <span id="user-name">{{user.UserName}}</span>
-                    <span><a href="/logout">logout</a></span>
+                    {{!-- <li><div class="logged-in-icon"></div></li> --}}
+                    <li><span id="user-name">{{user.UserName}}</span></li>
+                    <li><span><a href="/logout">logout</a></span></li>
                 {{/if}}
-                
-                <div id="logged-in">
-                    <div class="logged-in-icon"></div>
-                    <span class="logged-in-name">Sample Name Here</span>
-                </div>
             </ul>
         </div>
     </nav>
@@ -101,8 +97,8 @@
                 <input class="search-text" type="text" placeholder="Filter User Names">
                 <ul class="userNameList"></ul>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
         </form>
+        <button class="btn waves-effect waves-light" id="side-search" name="action">Search</button>
     </div>
     <!-- ==^^^SIDE NAV^^^== -->
     {{!-- POST FEED --}}
@@ -154,16 +150,23 @@
         </div>
 
         <div class="local-posts">
-            {{#if findLocal}}
+            {{#if postal}}
                 <h2>Local Posts</h2>
-                {{> local-posts}}
+                {{> posts}}
             {{/if}}
         </div>
 
         <div class="user-posts">
             {{#if findUser}}
                 <h2>{{user}}'s Posts</h2>
-                {{> userPosts}}
+                {{> posts}}
+            {{/if}}
+        </div>
+
+        <div class="posts-by-tag">
+            {{#if postsByTag}}
+                <h2>#{{tag}}</h2>
+                {{> posts}}
             {{/if}}
         </div>
 
