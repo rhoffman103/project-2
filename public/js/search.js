@@ -8,15 +8,14 @@ $(document).ready(() => {
 
                 $('.userNameList').html('')
 
-                console.log(data[0]);
+                // console.log(data[0]);
 
                 data.forEach((element, index) => {
-                    // console.log(element.name);
                     var li = $('<li>');
                     $(li).addClass('username li-' + index)
                         .appendTo($('.userNameList'));
 
-                    var a = $("<a>").attr("href", "/blueit/" + element.UserName)
+                    var a = $("<a>").attr("href", "/user/" + element.UserName)
                         .html(element.UserName);
                     $(a).appendTo($(".li-" + index))  ;                  
                 })
@@ -28,51 +27,66 @@ $(document).ready(() => {
     }
 
     const userPosts = name => {
-        $.get("/blueit/" + name, data => {
+        $.get("/user/" + name, data => {
         })
     }
 
+    const goToUsersPosts = name => {
+        $.get(`/user/${name}`);    }
+
     // Render a users posts
     const renderUserPosts = name => {
-        $.get("/api/authors/" + name, data => {
-            console.log(data);
-
-            var userView = $("<h5>")
-            $(userView).html(`${data.UserName}'s Posts`)
-                .appendTo(".user-posts");
+        // $.get("/api/authors/" + name, data => {
+        $.get("/api/postsby/" + name, data => {
+            console.log("username: " + data.userName);
 
             $(".local-posts").hide();
             $(".add-post").hide();
+            $(".all-posts").hide();
             $(".user-posts").empty();
 
-            data.Posts.forEach(element => {
-                console.log(element)
-                console.log("body " + element.Body)
-                console.log("name " + data.UserName)
-                console.log("time posted " + element.createdAt)
-                console.log("tags" + element.Tags)
+            var userView = $("<h5>")
+            $(userView).html(`${data.userName}'s Posts`)
+                .appendTo(".user-posts");
+
+            data.posts.forEach(post => {
+                let tags = "";
+
+                post.Tags.forEach((Tag, i) => {
+                    if (i < post.Tags.length) {
+                        tags += `${Tag.tag}, `;
+                    } else {
+                        tags += Tag.tag;
+                    }
+                });
 
                 var userPosts = $(`
                 <div class="post">
                     <div class="text-bubble">
                         <div class="bubble z-depth-1">
-                            <p class="body-text">${element.Body}</p>
+                            <p class="body-text">${post.Body}</p>
                         </div>
                         <div class="triangle-right"></div>
                         <div class="icon">
                             <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                            <span class="icon-name">${data.UserName}</span>
+                            <span class="icon-name">${data.userName}</span>
                         </div>
                         <div class="post-info">
-                            <p>Postal: ${element.Location}</p>
-                            <span id="tags">Topics: ${element.Tags}</span>
-                            <span id="time-stamp">${element.createdAt}</span>
+                            <p>Postal: ${post.Location}</p>
+                            <span id="tags">Topics: ${tags}</span>
+                            <span id="time-stamp">${post.createdAt}</span>
                         </div>
                     </div>
                 </div>`)
                 $(userPosts).appendTo($(".user-posts"));
             })
             
+        })
+    }
+
+    const logUserPosts= (name) => {
+        $.get("/api/postsby/" + name, data => {
+            console.log(data);
         })
     }
 
@@ -91,9 +105,10 @@ $(document).ready(() => {
     })
 
     // click to retrieve users posts
-    $('body').on( "click", ".username", (e) => {
-        // renderUserPosts(e.currentTarget.innerHTML);
-        userPosts(e.currentTarget.innerHTML);
-        $('.userNameList').empty();
-      });
+    // $('body').on( "click", ".username", (e) => {
+        // e.preventDefault();
+        // renderUserPosts($(e.currentTarget).text());
+        // $('.userNameList').empty();
+        // logUserPosts($(e.currentTarget).text());
+    //   });
 });
