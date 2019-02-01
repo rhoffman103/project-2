@@ -2,7 +2,7 @@ var exports = (module.exports = {});
 var db = require("../models");
 
 exports.signup = function (req, res) {
-    db.Posts.findAll({
+    db.Post.findAll({
         include: [db.Authors]
     }).then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
@@ -16,8 +16,8 @@ exports.signup = function (req, res) {
 
 exports.signin = (req, res) => {
     // console.log("username: " + req.user.UserName)
-    db.Posts.findAll({
-        include: [db.Authors]
+    db.Post.findAll({
+        include: [db.Tag, db.Authors]
     }).then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
         res.render("blueit", {
