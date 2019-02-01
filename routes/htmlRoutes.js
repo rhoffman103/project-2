@@ -1,23 +1,12 @@
 var db = require("../models");
+const isAuthenticated = require("../config/passport/isAuthenticated.js");
 
 module.exports = function(app) {
-  // blueit home page (logged out)
-  // app.get("/", (req, res) => {
-  //   db.Posts.findAll({
-  //     include: [db.Authors]
-  //   }).then(function(dbPosts) {
-  //     // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-  //     res.render("blueit", {
-  //       posts: dbPosts,
-  //       findPosts: true
-  //     });
-  //   });
-  // });
 
   // blueit home page (logged in)
-  app.get("/blueit", (req, res) => {
-    db.Posts.findAll({
-      include: [db.Authors]
+  app.get("/blueit", isAuthenticated, (req, res) => {
+    db.Post.findAll({
+      include: [db.Tag, db.Authors]
     }).then(function(dbPosts) {
       // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
       res.render("blueit", {
@@ -28,32 +17,34 @@ module.exports = function(app) {
     });
   });
 
-  // USERNAME ROUTE. render posts by name
-  app.get("/blueit/:name", function(req, res) {
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Post
-    db.Authors.findOne({
-      where: {
-        UserName: req.params.name
-      },
-      include: [db.Posts]
-    }).then(function(dbPosts) {
-      // res.json(dbPosts);
-      console.log("logging from htmlRoutes.js");
-      console.log("user name " + req.params.name);
-      // console.log("POSTS ==============================\n" + JSON.stringify(dbPosts.Posts, null, 2));
-      res.render("blueit", {
-        posts: dbPosts,
-        user: req.params.name,
-        findUser: true
+    // USERNAME ROUTE. render posts by name
+    app.get("/user/:name", /*isAuthenticated,*/ function(req, res) {
+      console.log("api/name route\n==========================================");
+      db.Authors.findOne({
+        where: {
+          UserName: req.params.name
+        },
+      }).then(function(dbAuthor) {
+        db.Post.findAll({
+          where: {
+            AuthorID: dbAuthor.ID
+          },
+          include: [db.Tag, db.Authors]
+        }).then(function(dbPosts) {
+          // console.log("dbPosts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+          // console.log(JSON.stringify(dbPosts, null, 2));
+          res.render("blueit", {
+            posts: dbPosts,
+            user: req.params.name,
+            findUser: true
+          });
+        });
       });
     });
-  });
 
   // RENDER POSTS BY LOCATION
-  app.get("/blueit/posts/:location", (req, res) => {
-    db.Posts.findAll({
+  app.get("/posts/location/:location", (req, res) => {
+    db.Post.findAll({
       where: {
         Location: req.params.location
       },
@@ -66,6 +57,38 @@ module.exports = function(app) {
       });
     });
   });
+
+  // RENDER POSTS BY TAG Logged Out
+  app.get("/posts/tag/:tag", (req, res) => {
+    db.Tag.findAll({
+      where: {
+        tag: req.params.tag
+      },
+      include: [db.Authors]
+    }).then(dbPosts => {
+      // res.json(dbPosts);
+      res.render("blueit", {
+        posts: dbPosts,
+        postsByTag: true,
+        tag: req.params.tag
+      });
+    });
+  });
+
+    // RENDER POSTS BY TAG Logged In
+    app.get("/posts/tag/:tag", isAuthenticated, (req, res) => {
+      db.Tag.findAll({
+        where: {
+          tag: req.params.tag
+        },
+        include: [db.Authors]
+      }).then(dbPosts => {
+        res.render("blueit", {
+          posts: dbPosts,
+          loggedIn: true
+        })
+      });
+    });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
