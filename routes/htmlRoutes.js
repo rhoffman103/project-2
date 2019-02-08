@@ -4,27 +4,13 @@ const isAuthenticated = require("../config/passport/isAuthenticated.js");
 
 module.exports = function(app) {
 
-  // blueit home page (logged in)
-  app.get("/blueit", isAuthenticated, (req, res) => {
-    db.Post.findAll({
-      include: [db.Tag, db.Authors]
-    }).then(function(dbPosts) {
-      // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-      res.render("blueit", {
-        posts: dbPosts,
-        findPosts: true,
-        loggedIn: true
-      });
-    });
-  });
-
     // USERNAME ROUTE. render posts by name
-    app.get("/user/:name", /*isAuthenticated,*/ function(req, res) {
+    app.get("/user/:name", function(req, res) {
       console.log("api/name route\n==========================================");
       db.Authors.findOne({
         where: {
           UserName: req.params.name
-        },
+        }
       }).then(function(dbAuthor) {
         db.Post.findAll({
           where: {
@@ -32,13 +18,21 @@ module.exports = function(app) {
           },
           include: [db.Tag, db.Authors]
         }).then(function(dbPosts) {
-          // console.log("dbPosts ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-          // console.log(JSON.stringify(dbPosts, null, 2));
-          res.render("blueit", {
-            posts: dbPosts,
-            user: req.params.name,
-            findUser: true
-          });
+          if (req.user) {
+            res.render("blueit", {
+              posts: dbPosts,
+              user: dbPosts[0].Author.UserName,
+              findUser: true,
+              loggedIn: true,
+              userName: req.user.UserName
+            });
+          } else {
+            res.render("blueit", {
+              posts: dbPosts,
+              user: dbPosts[0].Author.UserName,
+              findUser: true
+            });
+          }
         });
       });
     });
@@ -51,16 +45,25 @@ module.exports = function(app) {
       },
       include: [db.Tag, db.Authors]
     }).then(dbPosts => {
-      // res.json(dbPosts);
-      res.render("blueit", {
-        zip: req.params.location,
-        posts: dbPosts,
-        postal: true
-      });
+      if (req.user) {
+        res.render("blueit", {
+          zip: req.params.location,
+          posts: dbPosts,
+          postal: true,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          zip: req.params.location,
+          posts: dbPosts,
+          postal: true
+        });
+      }
     });
   });
 
-  // RENDER POSTS BY TAG Logged Out
+  // RENDER POSTS BY TAG
   app.get("/posts/tag/:tag", (req, res) => {
     db.Tag.findAll({
       where: {
@@ -68,29 +71,23 @@ module.exports = function(app) {
       },
       include: [db.Authors]
     }).then(dbPosts => {
-      // res.json(dbPosts);
+      if (req.user) {
+      res.render("blueit", {
+        posts: dbPosts,
+        postsByTag: true,
+        tag: req.params.tag,
+        loggedIn: true,
+        userName: req.user.UserName
+      });
+    } else {
       res.render("blueit", {
         posts: dbPosts,
         postsByTag: true,
         tag: req.params.tag
       });
+    }
     });
   });
-
-    // RENDER POSTS BY TAG Logged In
-    app.get("/posts/tag/:tag", isAuthenticated, (req, res) => {
-      db.Tag.findAll({
-        where: {
-          tag: req.params.tag
-        },
-        include: [db.Authors]
-      }).then(dbPosts => {
-        res.render("blueit", {
-          posts: dbPosts,
-          loggedIn: true
-        })
-      });
-    });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {

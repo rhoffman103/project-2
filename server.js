@@ -43,6 +43,7 @@ require('./routes/auth')(app, passport);
 require('./config/passport/passport.js')(passport, db.Authors); //Load Passport Strategies
 require("./routes/apiRoutes")(app);
 require("./routes/apiPosts")(app);
+require("./routes/AuthenticatedHtmlRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 

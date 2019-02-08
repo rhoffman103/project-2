@@ -6,14 +6,16 @@
             <span id="title"><a href="/blueit">BlueIt</a></span>
             <ul id="nav-mobile" class="right hide-on-med-and-down row">
 
-                {{#if signMeIn}}
+                {{!-- {{#if signMeIn}}
                     {{> signin}}
-                {{/if}}
+                {{/if}} --}}
 
-                {{#if user}}
+                {{#if userName}}
                     {{!-- <li><div class="logged-in-icon"></div></li> --}}
-                    <li><span id="user-name">{{user.UserName}}</span></li>
+                    <li><span id="user-name">{{userName}}</span></li>
                     <li><span><a href="/logout">logout</a></span></li>
+                    {{else}}
+                        {{> signin}}
                 {{/if}}
             </ul>
         </div>
@@ -111,30 +113,32 @@
 
         <!-- =====CREATE POST===== -->
         {{#unless signMeUp}}
-            <div class="post add-post animated fadeInUp">
-                <h5>Add Your Post</h5>
-                <form>
-                    <div class="row">
-                        <div class="col m7">
-                            <select id="topics" multiple>
-                                <option value="" disabled selected>Topics</option>
-                                <option value="1">Sports</option>
-                                <option value="2">Movies</option>
-                                <option value="3">Food</option>
-                            </select>
+            {{#if loggedIn}}
+                <div class="post add-post animated fadeInUp">
+                    <h5>Add Your Post</h5>
+                    <form>
+                        <div class="row">
+                            <div class="col m7">
+                                <select id="topics" multiple>
+                                    <option value="" disabled selected>Topics</option>
+                                    <option value="1">Sports</option>
+                                    <option value="2">Movies</option>
+                                    <option value="3">Food</option>
+                                </select>
+                            </div>
+                            <div class="input-field col m5">
+                                <input placeholder="" id="zip" type="text" class="validate">
+                                <label for="zip">zip</label>
+                            </div>
                         </div>
-                        <div class="input-field col m5">
-                            <input placeholder="" id="zip" type="text" class="validate">
-                            <label for="zip">zip</label>
+                        <div class="input-field">
+                            <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                            <label for="textarea2">What's on your mind?</label>
                         </div>
-                    </div>
-                    <div class="input-field">
-                        <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
-                        <label for="textarea2">What's on your mind?</label>
-                    </div>
-                </form>
-                <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
-            </div>
+                    </form>
+                    <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
+                </div>
+            {{/if}}
         {{/unless}}
         <!-- ==^^^CREATE POST^^^== -->
         <!-- <a href="/api/authors/JKRowling">jk</a> -->

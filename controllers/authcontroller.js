@@ -6,11 +6,11 @@ exports.signup = function (req, res) {
         include: [db.Authors]
     }).then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-        res.render("blueit", {
+            res.render("blueit", {
             posts: dbPosts,
             findPosts: true,
             signMeUp: true
-        });
+        })
     });
 };
 
