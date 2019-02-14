@@ -1,0 +1,21 @@
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <span id="title"><a href="/blueit">BlueIt</a></span>
+            <ul id="nav-mobile" class="right hide-on-med-and-down row">
+
+                {{#if userName}}
+                    {{!-- <li><div class="logged-in-icon">
+                            <span id="user-name">{{userName}}</span>
+                        </div>
+                    </li> --}}
+                    <li><span id="user-name">{{userName}}</span></li>
+                    <li><span><a href="/logout">logout</a></span></li>
+                    {{else}}
+                        {{> signin}}
+                {{/if}}
+            </ul>
+        </div>
+    </nav>
+</div>
