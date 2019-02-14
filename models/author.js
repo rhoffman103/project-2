@@ -29,18 +29,17 @@ module.exports = function(sequelize, DataTypes) {
 
   Authors.associate = function(models) {
     Authors.hasMany(models.Post, {
-      // foreignKey: "AuthorID",
       onDelete: "cascade"
     });
   };
 
-  Authors.associate = function(models) {
-    Authors.hasMany(models.Tag, {
-      foreignKey: {
-        allowNull: true
-      }
-    });
-  };
+  // Authors.associate = function(models) {
+  //   Authors.hasMany(models.Tag, {
+  //     foreignKey: {
+  //       allowNull: true
+  //     }
+  //   });
+  // };
 
   return Authors;
 };

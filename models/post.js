@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
       },
       Rating: {
         type: DataTypes.INTEGER
+      },
+      UserName: {
+        type: DataTypes.STRING,
+        notEmpty: true
       }
     },
     {

@@ -3,7 +3,7 @@
     <div class="text-bubble">
         <div class="bubble z-depth-1">
             <p class="body-text">
-                {{this.Body}}
+                {{this.Post.Body}}
             </p>
         </div>
         <div class="triangle-right"></div>
@@ -12,19 +12,19 @@
     <div class="icon">
         <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
         <span class="icon-name">
-            {{this.UserName}}
+            {{this.Post.UserName}}
         </span>
     </div>
     <div class="post-info">
-        <p>Postal: {{this.Location}}</p>
-        {{#if Tags}}
+        <p>Postal: {{this.Post.Location}}</p>
+        {{#if tag}}
             <span class="topics">Topics:
-                {{#each Tags}}
-                        <a href="/posts/tag/{{this.tag}}">#{{this.tag}}</a>
-                {{/each}}
+                {{!-- {{#each tag}} --}}
+                        <a href="/posts/tag/{{tag}}">#{{tag}}</a>
+                {{!-- {{/each}} --}}
             </span>
         {{/if}}
-        <span class="time-stamp">Posted {{this.createdAt}}</span>
+        <span class="time-stamp">Posted {{this.Post.createdAt}}</span>
     </div>
 </div>
 {{/each}}

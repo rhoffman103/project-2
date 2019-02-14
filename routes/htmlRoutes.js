@@ -49,7 +49,7 @@ module.exports = function(app) {
         res.render("blueit", {
           zip: req.params.location,
           posts: dbPosts,
-          postal: true,
+          postsByZip: true,
           loggedIn: true,
           userName: req.user.UserName
         });
@@ -57,7 +57,7 @@ module.exports = function(app) {
         res.render("blueit", {
           zip: req.params.location,
           posts: dbPosts,
-          postal: true
+          postsByZip: true
         });
       }
     });
@@ -69,7 +69,7 @@ module.exports = function(app) {
       where: {
         tag: req.params.tag
       },
-      include: [db.Authors]
+      include: [db.Post]
     }).then(dbPosts => {
       if (req.user) {
       res.render("blueit", {
@@ -86,6 +86,43 @@ module.exports = function(app) {
         tag: req.params.tag
       });
     }
+    });
+  });
+
+  // RENDER POSTS BY LOCATION & TAG
+  app.get("/posts/location/:location/tag/:tag", (req, res) => {
+    const filteredPosts = [];
+    db.Post.findAll({
+      where: {
+        location: req.params.location
+      },
+      include: [db.Tag, db.Authors]
+    }).then(dbPosts => {
+      dbPosts.forEach(post => {
+        post.Tags.forEach(Tag => {
+          if (Tag.tag.toLowerCase() === req.params.tag.toLowerCase()) {
+            filteredPosts.push(post);
+          }
+        });
+      });
+      if (req.user) {
+        res.render("blueit", {
+          posts: filteredPosts,
+          tagAndZip: true,
+          tag: req.params.tag,
+          zip: req.params.location,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          posts: filteredPosts,
+          tagAndZip: true,
+          tag: req.params.tag,
+          zip: req.params.location,
+          tag: req.params.tag
+        })
+      }
     });
   });
 

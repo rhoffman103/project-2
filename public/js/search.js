@@ -1,5 +1,39 @@
 $(document).ready(() => {
 
+    // SIDENAV FEATURES
+    $("select").formSelect();
+    $(".sidenav").sidenav();
+    $("input#input_text, textarea#textarea2").characterCounter();
+
+    const checkLocationInput = function() {
+        let locationFilter = $("#side-nav-location").val();
+        if (locationFilter.length > 0) {
+            $(location).attr('href',"/posts/" + locationFilter);
+        } else {
+            console.log("no location entered")
+        }
+    };
+
+    // Perform search on entered filters
+    const performSearch = () => {
+        const $location = $("#side-nav-location").val();
+        const $tag = $("#topic-filter :selected").text();
+        const $rating = $("#rating-filter :selected").text();
+        let URL = "/posts";
+        
+        if (/^\d{5}$|^\d{5}-\d{4}$/.test($location)) {
+            URL += `/location/${$location}`;
+        }
+        if ($tag != "Topics") {
+            URL += `/tag/${$tag.toLowerCase()}`;
+        }
+        if ($rating != "Choose Rating") {
+            URL += `/rating/${$rating.replace(/\s/g, '-').toLowerCase()}`;
+        }
+
+        $(location).attr('href', URL);
+    };
+
     // Retrieve list of users from search box
     const renderSearch = (key) => {
         if ($(".search-text").val() != "") {
@@ -24,71 +58,7 @@ $(document).ready(() => {
         else if($(".search-text").val() === "") {
             $('.userNameList').empty();
         }
-    }
-
-    const userPosts = name => {
-        $.get("/user/" + name, data => {
-        })
-    }
-
-    const goToUsersPosts = name => {
-        $.get(`/user/${name}`);    }
-
-    // Render a users posts
-    const renderUserPosts = name => {
-        // $.get("/api/authors/" + name, data => {
-        $.get("/api/postsby/" + name, data => {
-            console.log("username: " + data.userName);
-
-            $(".local-posts").hide();
-            $(".add-post").hide();
-            $(".all-posts").hide();
-            $(".user-posts").empty();
-
-            var userView = $("<h5>")
-            $(userView).html(`${data.userName}'s Posts`)
-                .appendTo(".user-posts");
-
-            data.posts.forEach(post => {
-                let tags = "";
-
-                post.Tags.forEach((Tag, i) => {
-                    if (i < post.Tags.length) {
-                        tags += `${Tag.tag}, `;
-                    } else {
-                        tags += Tag.tag;
-                    }
-                });
-
-                var userPosts = $(`
-                <div class="post">
-                    <div class="text-bubble">
-                        <div class="bubble z-depth-1">
-                            <p class="body-text">${post.Body}</p>
-                        </div>
-                        <div class="triangle-right"></div>
-                        <div class="icon">
-                            <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
-                            <span class="icon-name">${data.userName}</span>
-                        </div>
-                        <div class="post-info">
-                            <p>Postal: ${post.Location}</p>
-                            <span id="tags">Topics: ${tags}</span>
-                            <span id="time-stamp">${post.createdAt}</span>
-                        </div>
-                    </div>
-                </div>`)
-                $(userPosts).appendTo($(".user-posts"));
-            })
-            
-        })
-    }
-
-    const logUserPosts= (name) => {
-        $.get("/api/postsby/" + name, data => {
-            console.log(data);
-        })
-    }
+    };
 
     // EVENTS
     $('.search-text').on("keyup", e => {
@@ -102,13 +72,18 @@ $(document).ready(() => {
         if (!element.includes("username")) {
             $('.userNameList').empty();
         }
-    })
+    });
 
-    // click to retrieve users posts
-    // $('body').on( "click", ".username", (e) => {
-        // e.preventDefault();
-        // renderUserPosts($(e.currentTarget).text());
-        // $('.userNameList').empty();
-        // logUserPosts($(e.currentTarget).text());
-    //   });
+    // SEARCH FILTERS
+    $("#side-search").on("click", (e) => {
+        e.preventDefault();
+        performSearch();
+        // checkLocationInput();
+    });
+
+    $(document).on("keyup", function(event) {
+        if (event.keyCode === 13) {
+            checkLocationInput();
+        }
+    });
 });

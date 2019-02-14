@@ -1,13 +1,4 @@
 $(document).ready(function() {
-  // data conatins data.username and data.id
-  // const setUserNameTag = () => {
-  //   $.get("/api/user").then(data => {
-  //     console.log(data)
-  //     // $("#user-name").text(data.username);
-  //   });
-  // };
-
-  // setUserNameTag();
 
   // A function for handling what happens when the form to create a new post is submitted
   const handleFormSubmit = function() {
@@ -26,16 +17,17 @@ $(document).ready(function() {
 
     $.get("/api/user").then(data => {
       console.log(`User Data:`, data);
+      console.log(data.username);
       // Constructing a newPost object to hand to the database
       const newPost = {
           Location: zip,
           Body: postBody,
           Public: true,
           AuthorID: data.id,
+          UserName: data.username,
           Tags: tags
         };
       submitPost(newPost);
-      // submitTags(data.id);
     });
   };
 

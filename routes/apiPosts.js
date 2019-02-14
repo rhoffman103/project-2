@@ -10,7 +10,8 @@ module.exports = function(app) {
       Location: req.body.Location,
       Body: req.body.Body,
       Public: req.body.Public,
-      AuthorID: req.body.AuthorID
+      AuthorID: req.body.AuthorID,
+      UserName: req.body.UserName
     };
 
     // console.log("new post =======================")
