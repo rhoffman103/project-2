@@ -28,6 +28,7 @@ $(document).ready(function() {
           Tags: tags
         };
       submitPost(newPost);
+      location.reload();
     });
   };
 

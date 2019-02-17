@@ -16,6 +16,9 @@ module.exports = function(app) {
           where: {
             AuthorID: dbAuthor.ID
           },
+          order: [
+            ['createdAt', 'DESC'],
+          ],
           include: [db.Tag, db.Authors]
         }).then(function(dbPosts) {
           if (req.user) {
@@ -43,6 +46,9 @@ module.exports = function(app) {
       where: {
         Location: req.params.location
       },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
       include: [db.Tag, db.Authors]
     }).then(dbPosts => {
       if (req.user) {
@@ -69,6 +75,9 @@ module.exports = function(app) {
       where: {
         tag: req.params.tag
       },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
       include: [db.Post]
     }).then(dbPosts => {
       if (req.user) {
@@ -96,6 +105,9 @@ module.exports = function(app) {
       where: {
         location: req.params.location
       },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
       include: [db.Tag, db.Authors]
     }).then(dbPosts => {
       dbPosts.forEach(post => {
