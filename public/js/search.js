@@ -27,9 +27,10 @@ $(document).ready(() => {
         if ($tag != "Topics") {
             URL += `/tag/${$tag.toLowerCase()}`;
         }
-        if ($rating != "Choose Rating") {
-            URL += `/rating/${$rating.replace(/\s/g, '-').toLowerCase()}`;
-        }
+        // currently not a running feature
+        // if ($rating != "Choose Rating") {
+        //     URL += `/rating/${$rating.replace(/\s/g, '-').toLowerCase()}`;
+        // }
 
         $(location).attr('href', URL);
     };
