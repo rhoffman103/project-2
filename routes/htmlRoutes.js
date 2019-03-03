@@ -71,6 +71,7 @@ module.exports = function(app) {
 
   // RENDER POSTS BY TAG
   app.get("/posts/tag/:tag", (req, res) => {
+    let filteredPosts = [];
     db.Tag.findAll({
       where: {
         tag: req.params.tag
@@ -80,21 +81,33 @@ module.exports = function(app) {
       ],
       include: [db.Post]
     }).then(dbPosts => {
+      // loop posts with 1 attached tag, search by postId and push post to all posts with all included tags
+      dbPosts.forEach(post => {
+        db.Post.findOne({
+          where: {
+            ID: post.PostID
+          },
+          include: [db.Tag, db.Authors]
+        }).then( dbPost => {
+          filteredPosts.push(dbPost);
+          
+        });
+      });
       if (req.user) {
-      res.render("blueit", {
-        posts: dbPosts,
-        postsByTag: true,
-        tag: req.params.tag,
-        loggedIn: true,
-        userName: req.user.UserName
-      });
-    } else {
-      res.render("blueit", {
-        posts: dbPosts,
-        postsByTag: true,
-        tag: req.params.tag
-      });
-    }
+        res.render("blueit", {
+          posts: filteredPosts,
+          postsByTag: true,
+          tag: req.params.tag,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          posts: filteredPosts,
+          postsByTag: true,
+          tag: req.params.tag
+        });
+      }
     });
   });
 
