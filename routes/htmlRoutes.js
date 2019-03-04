@@ -92,7 +92,8 @@ module.exports = function(app) {
           filteredPosts.push(dbPost);
           
         });
-      });
+      }); //
+    }).then(() => {
       if (req.user) {
         res.render("blueit", {
           posts: filteredPosts,
@@ -108,7 +109,7 @@ module.exports = function(app) {
           tag: req.params.tag
         });
       }
-    });
+    })
   });
 
   // RENDER POSTS BY LOCATION & TAG
