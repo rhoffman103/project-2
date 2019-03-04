@@ -81,7 +81,24 @@ module.exports = function(app) {
       ],
       include: [db.Post]
     }).then(dbPosts => {
+      if (req.user) {
+        res.render("blueit", {
+          posts: dbPosts,
+          postsByTag: true,
+          tag: req.params.tag,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          posts: dbPosts,
+          postsByTag: true,
+          tag: req.params.tag
+        });
+      } 
+      // Works locally, but not deployed
       // loop posts with 1 attached tag, search by postId and push post to all posts with all included tags
+      /*
       dbPosts.forEach(post => {
         db.Post.findOne({
           where: {
@@ -90,11 +107,12 @@ module.exports = function(app) {
           include: [db.Tag, db.Authors]
         }).then( dbPost => {
           filteredPosts.push(dbPost);
-          
         });
-      }); //
-    }).then(() => {
-      if (req.user) {
+      });
+      */
+    });
+    /* .then(() => {
+       if (req.user) {
         res.render("blueit", {
           posts: filteredPosts,
           postsByTag: true,
@@ -108,8 +126,9 @@ module.exports = function(app) {
           postsByTag: true,
           tag: req.params.tag
         });
-      }
+      } 
     })
+    */
   });
 
   // RENDER POSTS BY LOCATION & TAG
