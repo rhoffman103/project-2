@@ -1,0 +1,29 @@
+<div id="side-nav" class="col m3">
+    <h5>Filter Posts</h5>
+    <hr>
+    <form>
+        <h6>Location:</h6>
+        <input id="side-nav-location" type="text" placeholder="Zip Code">
+        <h6>Search Topics:</h6>
+        <select id="topic-filter">
+            <option value="" disabled selected>Topics</option>
+            <option value="1">Sports</option>
+            <option value="2">Movies</option>
+            <option value="3">Food</option>
+        </select>
+        {{!-- <h6>Rating:</h6>
+        <select id="rating-filter">
+            <option value="" disabled selected>Choose Rating</option>
+            <option value="1">Best to Worst</option>
+            <option value="2">Worst to Best</option>
+        </select> --}}
+
+        <!-- SEARCH BOX -->
+        <h6>Search Usernames:</h6>
+        <div class="search-div">
+            <input class="search-text" type="text" placeholder="Filter User Names">
+            <ul class="userNameList"></ul>
+        </div>
+    </form>
+    <button class="btn waves-effect waves-light" id="side-search" <!-- name="action" -->>Search</button>
+</div>

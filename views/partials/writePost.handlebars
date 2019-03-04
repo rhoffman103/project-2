@@ -1,0 +1,26 @@
+{{#if loggedIn}}
+    <div class="post add-post animated fadeInUp">
+        <h5>Add Your Post</h5>
+        <form>
+            <div class="row">
+                <div class="col m7">
+                    <select id="topics" multiple>
+                        <option value="" disabled selected>Topics</option>
+                        <option value="1">Sports</option>
+                        <option value="2">Movies</option>
+                        <option value="3">Food</option>
+                    </select>
+                </div>
+                <div class="input-field col m5">
+                    <input placeholder="" id="zip" type="text" class="validate">
+                    <label for="zip">zip</label>
+                </div>
+            </div>
+            <div class="input-field">
+                <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
+                <label for="textarea2">What's on your mind?</label>
+            </div>
+        </form>
+        <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
+    </div>
+{{/if}}

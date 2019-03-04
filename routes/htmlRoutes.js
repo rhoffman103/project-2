@@ -1,69 +1,153 @@
 var db = require("../models");
 
+const isAuthenticated = require("../config/passport/isAuthenticated.js");
+
 module.exports = function(app) {
-  // blueit home page (logged out)
-  // app.get("/", (req, res) => {
-  //   db.Posts.findAll({
-  //     include: [db.Authors]
-  //   }).then(function(dbPosts) {
-  //     // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-  //     res.render("blueit", {
-  //       posts: dbPosts,
-  //       findPosts: true
-  //     });
-  //   });
-  // });
 
-  // blueit home page (logged in)
-  app.get("/blueit", (req, res) => {
-    db.Posts.findAll({
-      include: [db.Authors]
-    }).then(function(dbPosts) {
-      // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-      res.render("blueit", {
-        posts: dbPosts,
-        findPosts: true,
-        loggedIn: true
+    // USERNAME ROUTE. render posts by name
+    app.get("/user/:name", function(req, res) {
+      console.log("api/name route\n==========================================");
+      db.Authors.findOne({
+        where: {
+          UserName: req.params.name
+        }
+      }).then(function(dbAuthor) {
+        db.Post.findAll({
+          where: {
+            AuthorID: dbAuthor.ID
+          },
+          order: [
+            ['createdAt', 'DESC'],
+          ],
+          include: [db.Tag, db.Authors]
+        }).then(function(dbPosts) {
+          if (req.user) {
+            res.render("blueit", {
+              posts: dbPosts,
+              user: dbPosts[0].Author.UserName,
+              findUser: true,
+              loggedIn: true,
+              userName: req.user.UserName
+            });
+          } else {
+            res.render("blueit", {
+              posts: dbPosts,
+              user: dbPosts[0].Author.UserName,
+              findUser: true
+            });
+          }
+        });
       });
     });
-  });
-
-  // USERNAME ROUTE. render posts by name
-  app.get("/blueit/:name", function(req, res) {
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Post
-    db.Authors.findOne({
-      where: {
-        UserName: req.params.name
-      },
-      include: [db.Posts]
-    }).then(function(dbPosts) {
-      // res.json(dbPosts);
-      console.log("logging from htmlRoutes.js");
-      console.log("user name " + req.params.name);
-      // console.log("POSTS ==============================\n" + JSON.stringify(dbPosts.Posts, null, 2));
-      res.render("blueit", {
-        posts: dbPosts,
-        user: req.params.name,
-        findUser: true
-      });
-    });
-  });
 
   // RENDER POSTS BY LOCATION
-  app.get("/blueit/posts/:location", (req, res) => {
-    db.Posts.findAll({
+  app.get("/posts/location/:location", (req, res) => {
+    db.Post.findAll({
       where: {
         Location: req.params.location
       },
-      include: [db.Authors]
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+      include: [db.Tag, db.Authors]
     }).then(dbPosts => {
-      // res.json(dbPosts);
-      res.render("blueit", {
-        posts: dbPosts,
-        postal: true
+      if (req.user) {
+        res.render("blueit", {
+          zip: req.params.location,
+          posts: dbPosts,
+          postsByZip: true,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          zip: req.params.location,
+          posts: dbPosts,
+          postsByZip: true
+        });
+      }
+    });
+  });
+
+  // RENDER POSTS BY TAG
+  app.get("/posts/tag/:tag", (req, res) => {
+    let filteredPosts = [];
+    db.Tag.findAll({
+      where: {
+        tag: req.params.tag
+      },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+      include: [db.Post]
+    }).then(dbPosts => {
+      // loop posts with 1 attached tag, search by postId and push post to all posts with all included tags
+      dbPosts.forEach(post => {
+        db.Post.findOne({
+          where: {
+            ID: post.PostID
+          },
+          include: [db.Tag, db.Authors]
+        }).then( dbPost => {
+          filteredPosts.push(dbPost);
+          
+        });
       });
+      if (req.user) {
+        res.render("blueit", {
+          posts: filteredPosts,
+          postsByTag: true,
+          tag: req.params.tag,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          posts: filteredPosts,
+          postsByTag: true,
+          tag: req.params.tag
+        });
+      }
+    });
+  });
+
+  // RENDER POSTS BY LOCATION & TAG
+  app.get("/posts/location/:location/tag/:tag", (req, res) => {
+    const filteredPosts = [];
+    db.Post.findAll({
+      where: {
+        location: req.params.location
+      },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+      include: [db.Tag, db.Authors]
+    }).then(dbPosts => {
+      dbPosts.forEach(post => {
+        post.Tags.forEach(Tag => {
+          if (Tag.tag.toLowerCase() === req.params.tag.toLowerCase()) {
+            filteredPosts.push(post);
+          }
+        });
+      });
+      if (req.user) {
+        res.render("blueit", {
+          posts: filteredPosts,
+          tagAndZip: true,
+          tag: req.params.tag,
+          zip: req.params.location,
+          loggedIn: true,
+          userName: req.user.UserName
+        });
+      } else {
+        res.render("blueit", {
+          posts: filteredPosts,
+          tagAndZip: true,
+          tag: req.params.tag,
+          zip: req.params.location,
+          tag: req.params.tag
+        })
+      }
     });
   });
 

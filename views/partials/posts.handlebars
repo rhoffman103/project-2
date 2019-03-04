@@ -12,17 +12,18 @@
     <div class="icon">
         <div class="icon-picture" style="background-image: url(fashion-festival-graffiti-1447356.jpg);"></div>
         <span class="icon-name">
-            {{this.Author.UserName}}
+            {{this.UserName}}
         </span>
     </div>
     <div class="post-info">
         <p>Postal: {{this.Location}}</p>
-        <span class="topics">Topics:
-            {{Tags}}
-             {{!-- {{#each Tags}}
-            {{this}}
-            {{/each}} --}}
-        </span>
+        {{#if Tags}}
+            <span class="topics">Topics:
+                {{#each Tags}}
+                        <a href="/posts/tag/{{this.tag}}">#{{this.tag}}</a>
+                {{/each}}
+            </span>
+        {{/if}}
         <span class="time-stamp">Posted {{this.createdAt}}</span>
     </div>
 </div>

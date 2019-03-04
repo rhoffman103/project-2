@@ -1,110 +1,10 @@
-<!-- =====NAVBAR===== -->
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper container">
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <span id="title">BlueIt</span>
-            <ul id="nav-mobile" class="right hide-on-med-and-down row">
-
-                {{#if signMeIn}}
-                    {{> signin}}
-                {{/if}}
-
-                {{#if user}}
-                    <span id="user-name">{{user.UserName}}</span>
-                    <span><a href="/logout">logout</a></span>
-                {{/if}}
-                
-                <div id="logged-in">
-                    <div class="logged-in-icon"></div>
-                    <span class="logged-in-name">Sample Name Here</span>
-                </div>
-            </ul>
-        </div>
-    </nav>
-</div>
-<!-- ==^^^NAVBAR^^^== -->
-
-<!-- =====SLIDE OUT===== -->
-<ul id="slide-out" class="sidenav">
-    <div id="side-login">
-        <h5>Login:</h5>
-        <hr>
-        <div class="input-field col s5">
-            <input id="email-slide" type="email" class="validate">
-            <label for="email-slide">Email</label>
-        </div>
-        <div class="input-field col s5">
-            <input id="password-slide" type="password" class="validate">
-            <label for="password-slide">Password</label>
-        </div>
-    </div>
-    <div id="side-logged-in">
-        <div class="logged-in-icon"></div>
-        <span class="logged-in-name">Sample Name Here</span>
-    </div>
-    <h5>Filter Posts</h5>
-    <hr>
-    <form>
-        <h6>Location:</h6>
-        <input id="location" type="text" placeholder="Zip Code">
-        <h6>Serch Topics:</h6>
-        <select multiple>
-            <option value="" disabled selected>Topics</option>
-            <option value="1">Sports</option>
-            <option value="2">Movies</option>
-            <option value="3">Food</option>
-        </select>
-        <h6>Rating:</h6>
-        <select>
-            <option value="" disabled selected>Choose Rating</option>
-            <option value="1">Best to Worst</option>
-            <option value="2">Worst to Best</option>
-        </select>
-        <!-- SEARCH BOX -->
-        <h6>Search Usernames:</h6>
-        {{!-- <div class="search-div">
-            <input class="search-text" type="text" placeholder="Filter User Names">
-            <ul class="userNameList"></ul>
-        </div>
-        <button class="btn waves-effect waves-light" type="submit" name="action">Search</button> --}}
-    </form>
-</ul>
-<!-- ==^^^SLIDE OUT^^^== -->
-
+{{> navbar}}
+{{> slideOutNav}}
 <div class="main container row">
 
     <!-- =====SIDE NAV===== -->
-    <div id="side-nav" class="col m3">
-        <h5>Filter Posts</h5>
-        <hr>
-        <form>
-            <h6>Location:</h6>
-            <input id="side-nav-location" type="text" placeholder="Zip Code">
-            <h6>Serch Topics:</h6>
-            <select multiple>
-                <option value="" disabled selected>Topics</option>
-                <option value="1">Sports</option>
-                <option value="2">Movies</option>
-                <option value="3">Food</option>
-            </select>
-            <h6>Rating:</h6>
-            <select>
-                <option value="" disabled selected>Choose Rating</option>
-                <option value="1">Best to Worst</option>
-                <option value="2">Worst to Best</option>
-            </select>
-
-            <!-- SEARCH BOX -->
-            <h6>Search Usernames:</h6>
-            <div class="search-div">
-                <input class="search-text" type="text" placeholder="Filter User Names">
-                <ul class="userNameList"></ul>
-            </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Search</button>
-        </form>
-    </div>
-    <!-- ==^^^SIDE NAV^^^== -->
+    {{> filters}}
+    
     {{!-- POST FEED --}}
     <div id="post-feed" class="col m9">
 
@@ -115,58 +15,35 @@
 
         <!-- =====CREATE POST===== -->
         {{#unless signMeUp}}
-            <div class="post add-post animated fadeInUp">
-                <h5>Add Your Post</h5>
-                <form>
-                    <div class="row">
-                        <div class="col m7">
-                            <select id="topics" multiple>
-                                <option value="" disabled selected>Topics</option>
-                                <option value="1">Sports</option>
-                                <option value="2">Movies</option>
-                                <option value="3">Food</option>
-                            </select>
-                        </div>
-                        <div class="input-field col m5">
-                            <input placeholder="" id="zip" type="text" class="validate">
-                            <label for="zip">zip</label>
-                        </div>
-                    </div>
-                    <div class="input-field">
-                        <textarea id="textarea2" class="materialize-textarea" data-length="313"></textarea>
-                        <label for="textarea2">What's on your mind?</label>
-                    </div>
-                </form>
-                <button class="btn waves-effect waves-light" id="submit-post">Post me</button>
-            </div>
+            {{> writePost}}
         {{/unless}}
         <!-- ==^^^CREATE POST^^^== -->
-        <!-- <a href="/api/authors/JKRowling">jk</a> -->
+
         {{!-- POSTS --}}
         <div class="all-posts">
             <h5>What's In Your Feed?</h5>
             {{#if findPosts}}
-                {{#unless findUser}}
                     <h2>All Posts</h2>
-                    {{> posts}}
-                {{/unless}}
             {{/if}}
-        </div>
-
-        <div class="local-posts">
-            {{#if findLocal}}
-                <h2>Local Posts</h2>
-                {{> local-posts}}
+            {{#if postsByZip}}
+                <h2>Posts In {{zip}}</h2>
             {{/if}}
-        </div>
-
-        <div class="user-posts">
             {{#if findUser}}
                 <h2>{{user}}'s Posts</h2>
-                {{> userPosts}}
             {{/if}}
+            {{#if postsByTag}}
+                <h2>#{{tag}}</h2>
+            {{/if}}
+            {{#if tagAndZip}}
+                <h2>#{{tag}} in {{zip}}</h2>
+            {{/if}}
+            {{#if postsByTag}}
+                {{> posts}}
+            {{/if}}
+            {{#unless postsByTag}}
+                {{> posts}}
+            {{/unless}}
         </div>
-
     </div>
 
 

@@ -1,24 +1,23 @@
 var exports = (module.exports = {});
 var db = require("../models");
+const htmlQueries = require("./htmlController");
 
 exports.signup = function (req, res) {
-    db.Posts.findAll({
-        include: [db.Authors]
-    }).then(function (dbPosts) {
+    htmlQueries.findAllPosts()
+    .then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
-        res.render("blueit", {
+            res.render("blueit", {
             posts: dbPosts,
             findPosts: true,
             signMeUp: true
-        });
+        })
     });
 };
 
 exports.signin = (req, res) => {
     // console.log("username: " + req.user.UserName)
-    db.Posts.findAll({
-        include: [db.Authors]
-    }).then(function (dbPosts) {
+    htmlQueries.findAllPosts()
+    .then(function (dbPosts) {
         // console.log("POSTS \n" + JSON.stringify(dbPosts, null, 2))
         res.render("blueit", {
             posts: dbPosts,
