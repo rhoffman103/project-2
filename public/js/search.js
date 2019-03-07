@@ -15,24 +15,30 @@ $(document).ready(() => {
     };
 
     // Perform search on entered filters
-    const performSearch = () => {
-        const $location = $("#side-nav-location").val();
-        const $tag = $("#topic-filter :selected").text();
-        const $rating = $("#rating-filter :selected").text();
-        let URL = "/posts";
-        
-        if (/^\d{5}$|^\d{5}-\d{4}$/.test($location)) {
-            URL += `/location/${$location}`;
-        }
-        if ($tag != "Topics") {
-            URL += `/tag/${$tag.toLowerCase()}`;
-        }
-        // currently not a running feature
-        // if ($rating != "Choose Rating") {
-        //     URL += `/rating/${$rating.replace(/\s/g, '-').toLowerCase()}`;
-        // }
+    const performSearch = (mobile) => {
+        const $location = $(`.side-nav-location${mobile}`).val().trim();
+        const $tag = $(`.topic-filter${mobile} :selected`).text();
+        const $select = $(`.topic-filter${mobile}`).children("option:selected").attr("value");
+        const $rating = $(`rating-filter${mobile} :selected`).text();
+        let URL = "";
+        console.log(mobile);
+        if ((/^\d{5}$|^\d{5}-\d{4}$/.test($location)) || ($select > 0)) {
+            URL += "/posts";
+            if (/^\d{5}$|^\d{5}-\d{4}$/.test($location)) {
+                URL += `/location/${$location}`;
+            };
+            if ($select > 0) {
+                URL += `/tag/${$tag.toLowerCase()}`;
+            };
+            // currently not a running feature
+            // if ($rating != "Choose Rating") {
+            //     URL += `/rating/${$rating.replace(/\s/g, '-').toLowerCase()}`;
+            // }
 
-        $(location).attr('href', URL);
+            $(location).attr('href', URL);
+            // console.log(URL);
+        };
+
     };
 
     // Retrieve list of users from search box
@@ -76,10 +82,15 @@ $(document).ready(() => {
     });
 
     // SEARCH FILTERS
-    $("#side-search").on("click", (e) => {
+    $(".filter-search").on("click", (e) => {
         e.preventDefault();
-        performSearch();
+        performSearch("");
         // checkLocationInput();
+    });
+
+    $(".filter-search-mobile").on("click", (e) => {
+        e.preventDefault();
+        performSearch("-mobile");
     });
 
     $(document).on("keyup", function(event) {
