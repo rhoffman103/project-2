@@ -42,34 +42,52 @@ $(document).ready(() => {
     };
 
     // Retrieve list of users from search box
-    const renderSearch = (key) => {
-        if ($(".search-text").val() != "") {
-            console.log("axaj request");
+    const renderSearch = (key, mobile) => {
+        if ($(".search-text").val() != "" || $(`.search-text-${mobile}`).val() != "") {
+            
             $.get("/api/usersearch/" + key, data => {
-
-                $('.userNameList').html('')
-
-                // console.log(data[0]);
+                if (mobile) {
+                    $(`.userNameList-${mobile}`).html('')
+                }
+                else {
+                    $('.userNameList').html('')
+                }
 
                 data.forEach((element, index) => {
                     var li = $('<li>');
-                    $(li).addClass('username li-' + index)
+                    if (mobile) {
+                        $(li).addClass('username li-' + index)
+                        .appendTo($(`.userNameList-${mobile}`));
+                    }
+                    else {
+                        $(li).addClass('username li-' + index)
                         .appendTo($('.userNameList'));
+                    }
 
-                    var a = $("<a>").attr("href", "/user/" + element.UserName)
+                    var a = $("<a>").attr("href", `/user/${element.UserName}`)
                         .html(element.UserName);
-                    $(a).appendTo($(".li-" + index))  ;                  
+                    $(a).appendTo($(`.li-${index}`))  ;                  
                 })
             })
         }
         else if($(".search-text").val() === "") {
-            $('.userNameList').empty();
+            if (mobile) {
+                $(`.userNameList-${mobile}`).empty();
+            }
+            else {
+                $('.userNameList').empty();
+            }
         }
     };
 
     // EVENTS
+    // render realtime username search
     $('.search-text').on("keyup", e => {
         renderSearch(e.target.value);
+    })
+
+    $('.search-text-mobile').on("keyup", e => {
+        renderSearch(e.target.value, "mobile");
     })
 
     // clear dropdown when clicked away
